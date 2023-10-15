@@ -11,6 +11,14 @@
     flex: 46%;
 }
 .regForm label{
+    position: relative;
     margin-bottom: 10px !important;
     padding: 10px 10px 10px 10px !important;
+}
+.regForm input[name="country"], .regForm input[name="gender"]{
+    position: absolute;
+    top: auto;
+    left: auto;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
 }

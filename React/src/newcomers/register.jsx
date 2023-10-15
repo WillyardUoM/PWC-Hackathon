@@ -6,8 +6,8 @@ import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
 
 function Register() {
-  const [selectedGender, setSelectedGender] = useState(0);
-  const [selectedCountry, setSelectedCountry] = useState(0);
+  const [selectedGender, setSelectedGender] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
   const gender = [
     { name: "Male", value: "male" },
     { name: "Female", value: "female" },
@@ -22,7 +22,7 @@ function Register() {
       <div className={styles.login}>
         <h1>Create your account</h1>
         <span>Let's get started today for free</span>
-        <button>
+        <button className={styles.googleBtn}>
           <img src="images/google.png" height={"25"} alt="" />
           Login with Google
         </button>
@@ -30,12 +30,13 @@ function Register() {
         <form className={regStyle.regForm}>
           <div>
             <span style={{ marginLeft: "10px" }}>
-              Full Name <span style={{ color: "orange" }}>*</span>
+              Full Name <span style={{ color: "#F85500" }}>*</span>
             </span>
             <label htmlFor="fname">
               <input
                 type="text"
                 name="fname"
+                required
                 id="fname"
                 placeholder="Enter your name"
               />
@@ -43,12 +44,13 @@ function Register() {
           </div>
           <div>
             <span style={{ marginLeft: "10px" }}>
-              Email <span style={{ color: "orange" }}>*</span>
+              Email <span style={{ color: "#F85500" }}>*</span>
             </span>
             <label htmlFor="email">
               <input
                 type="email"
                 name="email"
+                required
                 id="email"
                 placeholder="Enter your name"
               />
@@ -56,12 +58,22 @@ function Register() {
           </div>
           <div>
             <span style={{ marginLeft: "10px" }}>
-              Gender <span style={{ color: "orange" }}>*</span>
+              Gender <span style={{ color: "#F85500" }}>*</span>
             </span>
-            <label htmlFor="gender">
+            <label htmlFor="">
+              <input
+                type="text"
+                value={selectedGender}
+                required
+                name="gender"
+                id="gender"
+              />
               <Dropdown
                 value={selectedGender}
-                onChange={(e) => setSelectedGender(e.value)}
+                onChange={(e) => {
+                  setSelectedGender(e.value);
+                  console.log(selectedGender);
+                }}
                 options={gender}
                 optionLabel="name"
                 placeholder="Select your gender"
@@ -71,9 +83,16 @@ function Register() {
           </div>
           <div>
             <span style={{ marginLeft: "10px" }}>
-              Country <span style={{ color: "orange" }}>*</span>
+              Country <span style={{ color: "#F85500" }}>*</span>
             </span>
-            <label htmlFor="country">
+            <label htmlFor="">
+              <input
+                required
+                type="text"
+                name="country"
+                id="country"
+                value={selectedCountry}
+              />
               <Dropdown
                 value={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.value)}
@@ -86,12 +105,13 @@ function Register() {
           </div>
           <div>
             <span style={{ marginLeft: "10px" }}>
-              Age <span style={{ color: "orange" }}>*</span>
+              Age <span style={{ color: "#F85500" }}>*</span>
             </span>
             <label htmlFor="age">
               <input
                 type="number"
                 name="age"
+                required
                 id="age"
                 placeholder="Enter your age"
               />
@@ -99,26 +119,32 @@ function Register() {
           </div>
           <div>
             <span style={{ marginLeft: "10px" }}>
-              Password <span style={{ color: "orange" }}>*</span>
+              Password <span style={{ color: "#F85500" }}>*</span>
             </span>
             <label htmlFor="password">
               <input
                 type="password"
                 name="password"
+                required
                 id="password"
                 placeholder="Enter your password"
               />
               <i className="fa-regular fa-eye"></i>
             </label>
           </div>
+          <button
+            style={{
+              backgroundColor: "#1E1E1E",
+              color: "white",
+              marginBottom: "0px",
+            }}
+          >
+            Register
+          </button>
         </form>
-        <input type="button" value={"Register"} />
         <p style={{ fontSize: "14px" }}>
           Already have an account?{" "}
-          <Link
-            to="/"
-            style={{ color: "orange", textDecoration: "none" }}
-          >
+          <Link to="/" style={{ color: "#F85500", textDecoration: "none" }}>
             Log In
           </Link>
         </p>

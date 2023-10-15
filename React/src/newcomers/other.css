@@ -11,3 +11,27 @@
 .p-progressbar-value{
     background-color: #f85500;
 }
+.p-fileupload-buttonbar{
+    background: none;
+    border-left: 2px dashed lightgray;
+    border-right: 2px dashed lightgray;
+    border-top: 2px dashed lightgray;
+    border-bottom: none;
+    display: flex;
+    justify-content: center;
+}
+.p-fileupload-content{
+    background: none;
+    border-left: 2px dashed lightgray;
+    border-right: 2px dashed lightgray;
+    border-bottom: 2px dashed lightgray;
+    border-top: none;
+}
+.p-button.p-component[aria-label="Cancel"]{
+    display: none;
+}
+.p-button{
+    background-color: #f85500;
+    color: white;
+    border: none;
+}

@@ -7,7 +7,7 @@ function Login() {
       <div className={styles.login}>
         <h1>Login your account</h1>
         <span>Let's get you back on track</span>
-        <button>
+        <button className={styles.googleBtn}>
           <img src="images/google.png" height={"25"} alt="" />
           Login with Google
         </button>
@@ -23,10 +23,11 @@ function Login() {
                 name="email"
                 id="email"
                 placeholder="Enter your name"
+                required
               />
             </label>
           </div>
-          <div>
+          <div style={{ marginBottom: "40px" }}>
             <span style={{ marginLeft: "10px" }}>
               Password <span style={{ color: "#f85500" }}>*</span>
             </span>
@@ -36,23 +37,27 @@ function Login() {
                 name="password"
                 id="password"
                 placeholder="Enter your password"
+                required
               />
               <i className="fa-regular fa-eye"></i>
             </label>
           </div>
+          <button
+            style={{
+              backgroundColor: "#1E1E1E",
+              color: "white",
+              marginBottom: "0px",
+            }}
+          >
+            Login
+          </button>
         </form>
-        <button
-          style={{
-            backgroundColor: "black",
-            color: "white",
-            marginBottom: "0px",
-          }}
-        >
-          Login
-        </button>
         <p style={{ fontSize: "14px" }}>
           Don't have an account?{" "}
-          <Link to="/Register" style={{ color: "#f85500", textDecoration: "none" }}>
+          <Link
+            to="/Register"
+            style={{ color: "#f85500", textDecoration: "none" }}
+          >
             Sign Up
           </Link>
         </p>
