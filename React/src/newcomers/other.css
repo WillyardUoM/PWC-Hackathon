@@ -1,0 +1,13 @@
+.p-dropdown-label{
+    font-size: 13px;
+    padding: 0px;
+}
+.p-dropdown-items{
+    font-size: 13px;
+}
+.p-dropdown-trigger{
+    justify-content: end;
+}
+.p-progressbar-value{
+    background-color: #f85500;
+}

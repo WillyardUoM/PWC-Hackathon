@@ -1,0 +1,39 @@
+.progressBar{
+    width: 100%;
+    text-align: end;
+    margin: 0 0 20px 0;
+}
+.methods{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10%;
+    width: 100%;
+}
+.methods > div{
+    flex: 45%;
+    border-radius: 10px;
+    border: 2px solid lightgray;
+    padding: 10px 20px;
+    margin-bottom: 30px;
+}
+.methods h3{
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0px;
+    color: black;
+}
+.methods > div span{
+    font-size: 14px;
+    color: #909090;
+}
+.methods > div i{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+    border-radius: 10px;
+    border: 1px solid #909090;
+    color: black;
+}

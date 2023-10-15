@@ -1,0 +1,16 @@
+.register button + span{
+    margin-bottom: 10px !important;
+}
+.regForm{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8%;
+}
+.regForm > div{
+    flex: 46%;
+}
+.regForm label{
+    margin-bottom: 10px !important;
+    padding: 10px 10px 10px 10px !important;
+}
