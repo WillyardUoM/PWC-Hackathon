@@ -1,26 +1,13 @@
 import prodStyles from "./proceed.module.css";
 import { Outlet, Link } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
-import { FileUpload } from "primereact/fileupload";
-import { Toast } from "primereact/toast";
-import React, { useState,useRef } from "react";
 import "./primereactMod.css";
 
-function UploadResume() {
-  const toast = useRef(null);
-
-  const onUpload = () => {
-    console.log("ge");
-    toast.current.show({
-      severity: "info",
-      summary: "Success",
-      detail: "File Uploaded",
-    });
-  };
+function LinkedInURL() {
   return (
     <>
       <div className={prodStyles.proceed}>
-        <h1>Upload Your Resume</h1>
+        <h1>Insert your LinkedIn URL</h1>
         <p style={{ color: "gray", margin: "0px 0 20px", fontSize: "14px" }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
           nobis, aliquid quia, quasi totam eligendi debitis itaque eaque
@@ -30,27 +17,25 @@ function UploadResume() {
           <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
         </div>
 
-        <div style={{ width: "100%" }}>
-          <Toast ref={toast}></Toast>
-          <FileUpload
-            name="demo[]"
-            accept="pdf/*"
-            maxFileSize={1000000}
-            customUpload={true}
-            uploadHandler={onUpload}
-            emptyTemplate={
-              <div className={prodStyles.upload_region}>
-                <i className="fa-regular fa-file-pdf"></i>
-                <p>
-                  Drag & Drop or{" "}
-                  <span style={{ color: "#F85500" }}>Choose file</span> to
-                  upload
-                </p>
-                <span style={{ color: "gray" }}>PDF Max 10MB</span>
-              </div>
-            }
-          />
-        </div>
+        <form id="linkedin" className={prodStyles.eduList}>
+          <div className={prodStyles.fields}>
+          <div>
+            <span style={{ marginLeft: "10px" }}>
+              LinkedIn URL <span style={{ color: "#f85500" }}>*</span>
+            </span>
+            <label htmlFor="linkedinURL">
+              <input
+                type="url"
+                name="linkedinURL"
+                id="linkedinURL"
+                placeholder="Enter your LinkedIn Profile URL"
+                required
+              />
+            </label>
+          </div>
+          </div>
+        </form>
+
         <div className={prodStyles.BackNextBtn}>
           <button style={{ border: "2px solid lightgray" }}>
             <Link to="/proceed" style={{ textDecoration: "none" }}>
@@ -58,13 +43,15 @@ function UploadResume() {
             </Link>
           </button>
           <button
+            form="others"
+            type="submit"
             style={{
               color: "white",
               border: "none",
               backgroundColor: "#1E1E1E",
             }}
           >
-            Next
+            Submit
           </button>
         </div>
       </div>
@@ -72,4 +59,4 @@ function UploadResume() {
   );
 }
 
-export default UploadResume;
+export default LinkedInURL;

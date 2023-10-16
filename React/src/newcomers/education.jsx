@@ -4,7 +4,7 @@ import { Outlet, Link } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
-import "./other.css";
+import "./primereactMod.css";
 
 function Education() {
   const [selectedDegree, setSelectedDegree] = useState("");
@@ -16,7 +16,7 @@ function Education() {
   ];
 
   const addEducation = () => {
-    setCount(prevCount => prevCount + 1);
+    setCount((prevCount) => prevCount + 1);
     const newEducation = (
       <div className="item" key={count}>
         <div className={prodStyles.eduHead}>
@@ -100,14 +100,14 @@ function Education() {
     setEduCode([...eduCode, newEducation]);
   };
 
-  const deleteEducation = () =>{
+  const deleteEducation = () => {
     const educationList = document.getElementsByClassName("item");
     if (educationList.length == 0) {
-        return;
+      return;
     }
     setCount(count - 1);
     educationList[educationList.length - 1].remove();
-  }
+  };
 
   return (
     <>
@@ -118,7 +118,7 @@ function Education() {
           nobis, aliquid quia, quasi totam eligendi debitis itaque eaque
         </p>
         <div className={prodStyles.progressBar}>
-          <span style={{ color: "gray" }}>80% Completed</span>
+          <span style={{ color: "gray", fontSize: "14px" }}>80% Completed</span>
           <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
         </div>
 
@@ -211,10 +211,16 @@ function Education() {
               Go Back
             </Link>
           </button>
-          <button onClick={deleteEducation} style={{color:"#F85500", border:"2px solid #F85500"}}>Delete Education</button>
+          <button
+            onClick={deleteEducation}
+            style={{ color: "#F85500", border: "2px solid #F85500" }}
+          >
+            Delete Education
+          </button>
           <button onClick={addEducation}>Add Another</button>
-          <button form="education" type="submit"
-            
+          <button
+            form="education"
+            type="submit"
             style={{
               color: "white",
               border: "none",

@@ -2,7 +2,7 @@ import styles from "./newcomers.module.css";
 import prodStyles from "./proceed.module.css";
 import { Outlet, Link } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
-import "./other.css";
+import "./primereactMod.css";
 
 function Proceed() {
   return (
@@ -14,6 +14,13 @@ function Proceed() {
           <ProgressBar style={{ height: "15px" }} value={10}></ProgressBar>
         </div>
         <div className={prodStyles.methods}>
+        <div>
+            <Link to="/LinkedinUrl" style={{ textDecoration: "none" }}>
+              <i class="fa-brands fa-linkedin-in"></i>
+              <h3>LinkedIn Url</h3>
+              <span>Retrieve information via LinkedIn</span>
+            </Link>
+          </div>
           <div>
             <Link to="/Education" style={{ textDecoration: "none" }}>
               <i class="fa-regular fa-file-lines"></i>
@@ -28,22 +35,10 @@ function Proceed() {
               <span>Upload Resume and retrieve information</span>
             </Link>
           </div>
-          <div>
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <i class="fa-brands fa-linkedin-in"></i>
-              <h3>LinkedIn Url</h3>
-              <span>Retrieve information via LinkedIn</span>
-            </Link>
-          </div>
-          <div>
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <i class="fa-brands fa-linkedin-in"></i>
-              <h3>Other</h3>
-              <span>test</span>
-            </Link>
-          </div>
         </div>
-        <button style={{margin:"0"}} className={prodStyles.nextBtn}>Next</button>
+        <button style={{ margin: "0" }} className={prodStyles.nextBtn}>
+          Next
+        </button>
       </div>
     </>
   );

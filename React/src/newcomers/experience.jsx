@@ -4,7 +4,7 @@ import { Outlet, Link } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
-import "./other.css";
+import "./primereactMod.css";
 
 function Experience() {
   const [workCode, setWorkCode] = useState([]);
@@ -90,7 +90,7 @@ function Experience() {
           nobis, aliquid quia, quasi totam eligendi debitis itaque eaque
         </p>
         <div className={prodStyles.progressBar}>
-          <span style={{ color: "gray" }}>80% Completed</span>
+          <span style={{ color: "gray", fontSize: "14px" }}>80% Completed</span>
           <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
         </div>
 

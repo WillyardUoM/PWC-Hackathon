@@ -35,3 +35,12 @@
     color: white;
     border: none;
 }
+.p-slider-range{
+    background-color: #f85500;
+}
+.p-slider-handle{
+    border: 2px solid #f85500;
+}
+.p-progressbar-label{
+    display: none;
+}

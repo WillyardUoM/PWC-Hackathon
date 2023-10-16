@@ -7,6 +7,10 @@ import Proceed from "./proceed";
 import UploadResume from "./upload_resume";
 import Education from "./education";
 import Experience from "./experience";
+import CareerGoal from "./career_goal";
+import SkillsAssessment from "./skills";
+import Others from "./other";
+import LinkedInURL from "./linkedinURL";
 
 
 function NewComers() {
@@ -22,6 +26,10 @@ function NewComers() {
               <Route path="/Upload_Resume" element={<UploadResume/>} />
               <Route exact path="/Education" element={<Education/>} />
               <Route exact path="/Experience" element={<Experience/>} />
+              <Route exact path="/Career_Goals" element={<CareerGoal/>} />
+              <Route exact path="/Skill_Assessment" element={<SkillsAssessment/>} />
+              <Route exact path="/Others" element={<Others/>} />
+              <Route exact path="/LinkedinUrl" element={<LinkedInURL/>} />
             </Routes>
         </div>
         <div className={styles.right_side}>

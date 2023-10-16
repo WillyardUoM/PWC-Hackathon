@@ -84,14 +84,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .BackNextBtn button {
     background-color: transparent;
     border-radius: 10px;
     padding: 10px 25px;
-    margin-bottom: 20px;
     font-family: "Poppins";
     font-weight: 500;
     cursor: pointer;
@@ -186,7 +185,7 @@
 }
 
 .fields input,
-.fields select {
+.fields select, .fields textarea {
     border: none;
     width: 100%;
     font-family: "Poppins";
@@ -203,7 +202,7 @@
     border-radius: 4px;
 }
 
-.eduList input:focus {
+.eduList input:focus, .eduList textarea:focus {
     outline: none;
 }
 

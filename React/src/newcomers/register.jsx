@@ -1,6 +1,6 @@
 import styles from "./newcomers.module.css";
 import regStyle from "./register.module.css";
-import "./other.css";
+import "./primereactMod.css";
 import { Outlet, Link } from "react-router-dom";
 import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
