@@ -4,9 +4,12 @@ import { v } from "../../styles/variables";
 
 export const SLayout = styled.div`
     display: flex;
+    width:100vw;
+    height:100vh;
+    background-color:#f4f5f8;
 `;
 
 export const SMain = styled.main`
     padding: calc(${v.smSpacing} * 2);
-flex: 1;
+    width: calc(100% - 110px);
 `;

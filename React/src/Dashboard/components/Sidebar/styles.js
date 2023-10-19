@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { btnReset, v } from "../../styles/variables";
 
 export const SSidebar = styled.div`
-    width: ${({ isOpen }) => (!isOpen ? `auto` : v.sidebarWidth)};
+    width: ${({ isOpen }) => (!isOpen ? "120px" : v.sidebarWidth)};
     background: ${({ theme }) => theme.bg};
     height: 100vh;
     padding: ${v.lgSpacing};

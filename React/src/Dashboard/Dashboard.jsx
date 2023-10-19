@@ -16,7 +16,6 @@ const Dash = () => {
     return (
         <ThemeContext.Provider value={{ setTheme, theme }}>
             <ThemeProvider theme={themeStyle}>
-                <GlobalStyle />
                 <Helmet>
                     <title>Sidebar - Code Focus</title>
                     <link rel="preconnect" href="https://fonts.googleapis.com" />

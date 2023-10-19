@@ -3,7 +3,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { useState } from "react";
 
-function AcademyHeader({isOpen}) {
+function AcademyHeader({ isOpen }) {
   const [loading, setLoading] = useState(false);
 
   const load = () => {
@@ -21,14 +21,15 @@ function AcademyHeader({isOpen}) {
           <h2>Academy + </h2>
           <img src="/images/youtube logo.png" height={"15px"} alt="" />
         </div>
-        <div className={isOpen? styles.functions:styles.functionsHidden}>
+        <div className={isOpen ? styles.functions : styles.functionsHidden}>
           <div>
             <span className="p-input-icon-right">
+              <i className="pi pi-search" />
               <InputText
                 placeholder="Wanna learn something else?"
                 height={"100%"}
+                width={"100%"}
               />
-              <i className="fa-solid fa-magnifying-glass"></i>
             </span>
             <Button
               label="Submit"
