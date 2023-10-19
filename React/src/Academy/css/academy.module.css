@@ -1,0 +1,245 @@
+body{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100vh;
+    background-color: black;
+}
+.academy{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    border-radius: 20px;
+    padding: 25px 20px;
+    overflow: hidden;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 0px 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #EDF1F2;
+}
+.logos{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logos h2{
+    margin: 0px;
+    font-size: 20px;
+}
+.functions div, .functionsHidden div{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.functions input, .functionsHidden input{
+    width: 230px;
+}
+.functions input, .functions button,.functionsHidden input, .functionsHidden button{
+    height: 35px;
+    font-size: 12px;
+}
+.stageList{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+.stage{
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 12px 18px;
+    border: 1px solid lightgray;
+    background-color: white;
+    border-radius: 15px;
+    z-index: 1;
+    transition: background-color 0.2s linear;
+}
+.stageTitle{
+    width:100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 12px;
+}
+.stageTitle b{
+    width:100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.stageMain{
+    position: relative;
+    width: 100%;
+}
+.stepList{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transform: translateY(-30px);
+    width: 100%;
+    padding: 45px 10px 15px 20px;
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    z-index: 0;
+    overflow: hidden;
+    transition: max-height 0.2s linear;
+}
+.row{
+    display: flex;
+    gap: 30px;
+    overflow-y: auto;
+}
+.course{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-right: 10px;
+    overflow: auto;
+}
+.course iframe{
+    width: 100%;
+    border-radius: 20px;
+    aspect-ratio: 16/9;
+}
+.course h5{
+    margin: 10px 0 ;
+}
+.course p{
+    font-size: 14px;
+    margin: 0px 0 10px 0;
+}
+.course::-webkit-scrollbar {
+    width: 8px;
+}
+
+.course::-webkit-scrollbar-thumb {
+    background: lightgrey;
+    border-radius: 4px;
+}
+.stageList::-webkit-scrollbar {
+    width: 8px;
+}
+
+.stageList::-webkit-scrollbar-thumb {
+    background: lightgrey;
+    border-radius: 4px;
+}
+.relatedCourse{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.relatedCourse img{
+    width: 270px;
+    height: 150px;
+    border-radius: 15px;
+}
+.relatedCourse b{
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+    width:100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.relatedCourse span{
+    font-size: 10px;
+    color: gray;
+}
+.courseList{
+    display: flex;
+    gap: 20px;
+    min-height: 210px;
+    width: auto;
+    overflow-x: scroll;
+}
+.courseList::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.courseList::-webkit-scrollbar-thumb {
+    background: lightgrey;
+    border-radius: 4px;
+}
+.actionButton{
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+@media only screen and (max-width: 800px) {
+    .stageList{
+        position: absolute;
+        background-color: white;
+        width: 100%;
+        top: 80px;
+        left: -100%;
+        height: calc(100% - 80px);
+        padding: 0px 20px 0 20px;
+        transition: left 0.2s linear;
+
+    }
+    .actionButton{
+        display: block;
+    }
+    .functions{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 80px);
+        background-color: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(5px); /* Adjust the blur radius as needed */
+        transition: visibility 0.3s, opacity 0.3s; /* Transition properties */
+    }
+    .functionsHidden{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 80px);
+        background-color: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(5px); /* Adjust the blur radius as needed */
+        transition: visibility 0.3s, opacity 0.3s; /* Transition properties */
+        visibility: hidden;
+        opacity: 0;
+    }
+    .functions div{
+        align-items: center;
+        justify-content: center;
+        width: 260px;
+        height: fit-content;
+    }
+  }
+  @media only screen and (max-width: 700px) {
+    .stage{
+        padding: 5px;
+        text-overflow: ellipsis;
+    }
+    .row{
+        gap: 10px;
+    }
+  }
