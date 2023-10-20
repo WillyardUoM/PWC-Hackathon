@@ -13,13 +13,15 @@ import {
 } from "./styles";
 
 import {
-    AiOutlineApartment,
     AiOutlineHome,
     AiOutlineCalendar,
     AiOutlineFieldTime,
     AiOutlineLeft,
     AiOutlineSetting,
+    AiOutlineRobot
 } from "react-icons/ai";
+
+import { MdOutlineSchool } from "react-icons/md";
 import { MdLogout, MdOutlineAnalytics } from "react-icons/md";
 
 
@@ -27,7 +29,7 @@ import { MdLogout, MdOutlineAnalytics } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 
 const Sidebar = () => {
-  
+
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const { pathname } = useLocation();
 
@@ -40,7 +42,7 @@ const Sidebar = () => {
                 </SSidebarButton>
             </>
             <SLogo>
-            <img src="/images/pwc-logo.png"  alt="" />
+                <img src="/images/pwc-logo.png" alt="" />
 
             </SLogo>
 
@@ -59,6 +61,16 @@ const Sidebar = () => {
                 </SLinkContainer>
             ))}
             <SDivider />
+            {thirdLinksArray.map(({ icon, label }) => (
+                <SLinkContainer key={label}>
+                    <SLink to="/" style={!sidebarOpen ? { width: `fit-content` } : {}}>
+                        <SLinkIcon>{icon}</SLinkIcon>
+                        {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
+                    </SLink>
+                </SLinkContainer>
+            ))}
+            <SDivider />
+
             {secondaryLinksArray.map(({ icon, label }) => (
                 <SLinkContainer key={label}>
                     <SLink to="/" style={!sidebarOpen ? { width: `fit-content` } : {}}>
@@ -93,7 +105,16 @@ const linksArray = [
     },
 
 ];
-
+const thirdLinksArray = [
+    {
+        label: "Academy",
+        icon: <MdOutlineSchool />,
+    },
+    {
+        label: "AI Tutor",
+        icon: <AiOutlineRobot />,
+    },
+];
 const secondaryLinksArray = [
     {
         label: "Settings",
