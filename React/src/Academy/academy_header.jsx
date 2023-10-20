@@ -3,16 +3,23 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { useState } from "react";
 
-function AcademyHeader({ isOpen }) {
+function AcademyHeader(props) {
   const [loading, setLoading] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   const load = () => {
+    // props.search(searchValue);
     setLoading(true);
-
     setTimeout(() => {
       setLoading(false);
     }, 2000);
   };
+
+  const handleInputChange = (event) => {
+    const newValue = event.target.value;
+    setSearchValue(newValue);
+  };
+
   return (
     <>
       <div className={styles.header}>
@@ -21,7 +28,7 @@ function AcademyHeader({ isOpen }) {
           <h2>Academy + </h2>
           <img src="/images/youtube logo.png" height={"15px"} alt="" />
         </div>
-        <div className={isOpen ? styles.functions : styles.functionsHidden}>
+        <div className={props.isOpen ? styles.functions : styles.functionsHidden}>
           <div>
             <span className="p-input-icon-right">
               <i className="pi pi-search" />
@@ -29,6 +36,8 @@ function AcademyHeader({ isOpen }) {
                 placeholder="Wanna learn something else?"
                 height={"100%"}
                 width={"100%"}
+                value={searchValue}
+                onChange={handleInputChange}
               />
             </span>
             <Button
