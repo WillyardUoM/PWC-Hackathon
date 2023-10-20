@@ -15,11 +15,13 @@ import {
 import {
     AiOutlineApartment,
     AiOutlineHome,
+    AiOutlineCalendar,
+    AiOutlineFieldTime,
     AiOutlineLeft,
     AiOutlineSetting,
 } from "react-icons/ai";
 import { MdLogout, MdOutlineAnalytics } from "react-icons/md";
-import { BsPeople } from "react-icons/bs";
+
 
 
 import { useLocation } from "react-router-dom";
@@ -79,23 +81,17 @@ const linksArray = [
 
     },
     {
-        label: "Statistics",
-        icon: <MdOutlineAnalytics />,
+        label: "Training Plan",
+        icon: <AiOutlineCalendar />,
         to: "/statistics",
 
     },
     {
-        label: "Customers",
-        icon: <BsPeople />,
+        label: "Progress Tracker",
+        icon: <AiOutlineFieldTime />,
         to: "/customers",
-
     },
-    {
-        label: "Diagrams",
-        icon: <AiOutlineApartment />,
 
-
-    },
 ];
 
 const secondaryLinksArray = [

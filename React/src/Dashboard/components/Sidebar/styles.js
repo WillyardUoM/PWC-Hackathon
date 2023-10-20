@@ -82,8 +82,7 @@ export const SLinkContainer = styled.div`
     background: ${({ theme, isActive }) => (!isActive ? `transparent` : theme.bg3)};
     border-radius: ${v.borderRadius};
     margin: 8px 0;
-display:flex;
-justify-content:center;
+
     :hover {
         box-shadow: inset 0 0 0 1px ${({ theme }) => theme.bg3};
     }
@@ -108,6 +107,9 @@ export const SLinkIcon = styled.div`
 `;
 
 export const SLinkLabel = styled.span`
+color:#1e1e1e;
+font-size:15px;
+font-weight:500;
     display: block;
     flex: 1;
     margin-left: ${v.smSpacing};
