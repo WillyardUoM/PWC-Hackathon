@@ -6,7 +6,7 @@ import HomePage from "../../pages/HomePage";
 import Academy from "../../../Academy/Academy";
 
 
-const Layout = ({ children }) => {
+const Layout = ({ }) => {
   return (
     <SLayout>
       <Sidebar />

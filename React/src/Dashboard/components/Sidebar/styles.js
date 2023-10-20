@@ -31,7 +31,7 @@ export const SSidebarButton = styled.button`
 `;
 
 export const SLogo = styled.div`
-    width: 52px;
+    width: 70px;
 
     img {
         max-width: 100%;
@@ -82,7 +82,8 @@ export const SLinkContainer = styled.div`
     background: ${({ theme, isActive }) => (!isActive ? `transparent` : theme.bg3)};
     border-radius: ${v.borderRadius};
     margin: 8px 0;
-
+display:flex;
+justify-content:center;
     :hover {
         box-shadow: inset 0 0 0 1px ${({ theme }) => theme.bg3};
     }
