@@ -109,6 +109,7 @@ const thirdLinksArray = [
     {
         label: "Academy",
         icon: <MdOutlineSchool />,
+        
     },
     {
         label: "AI Tutor",
