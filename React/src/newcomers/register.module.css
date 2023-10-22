@@ -1,24 +1,31 @@
-.register button + span{
-    margin-bottom: 10px !important;
+.register button + span {
+  margin-bottom: 10px !important;
 }
-.regForm{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8%;
+.regForm {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8%;
 }
-.regForm > div{
-    flex: 46%;
+.regForm > div {
+  flex: 46%;
 }
-.regForm label{
-    position: relative;
-    margin-bottom: 10px !important;
-    padding: 10px 10px 10px 10px !important;
+.regForm label {
+  position: relative;
+  margin-bottom: 10px !important;
+  padding: 10px 10px 10px 10px !important;
 }
-.regForm input[name="country"], .regForm input[name="gender"]{
-    position: absolute;
-    top: auto;
-    left: auto;
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
+.regForm input[name="country"],
+.regForm input[name="gender"] {
+  position: absolute;
+  top: auto;
+  left: auto;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+}
+
+.error-message {
+  color: red;
+  margin: 0px 0px 0px 10px;
+  font-size: 10px;
 }

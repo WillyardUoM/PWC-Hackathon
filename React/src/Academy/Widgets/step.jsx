@@ -1,8 +1,11 @@
 import styles from "../css/academy.module.css";
 
-function Steps() {
+function Steps(props) {
+  const handleClick = () =>{
+    props.link(props.video.videoId);
+  }
   return (
-    <div className={styles.stage} style={{width:"100%",border:"none",padding:"0px"}}>
+    <div className={styles.stage} style={{width:"100%",border:"none",padding:"0px", cursor:"pointer"}} onClick={handleClick}>
         <i
           className="fa-solid fa-check"
           style={{
@@ -14,9 +17,9 @@ function Steps() {
           }}
         ></i>
         <div className={styles.stageTitle}>
-          Introduction to Javascript
+          {props.video.title}
         </div>
-        <span style={{fontSize:"12px"}}>1:25</span>
+        <span style={{fontSize:"12px"}}>{props.video.lengthText}</span>
       </div>
   );
 }

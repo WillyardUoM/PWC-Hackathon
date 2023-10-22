@@ -4,10 +4,10 @@ import Steps from "./step";
 
 
 
-function Stage() {
+function Stage(props) {
   const [isOpen, setOpen] = useState(false);
 
-  const dataArray = ["One", "Two", "Three", "Four", "Five"];
+  const videos = props.playlist.videos;
 
 
   const show = (event) => {
@@ -37,9 +37,9 @@ function Stage() {
           <span
             style={{ marginBottom: "2px", color: "#515151", display: "block" }}
           >
-            Stage 1
+            Stage {props.count + 1}
           </span>
-          <b>Introduction to Javascript</b>
+          <b>{props.playlist.playlist}</b>
         </div>
         <i
           className="fa-solid fa-angle-down"
@@ -52,8 +52,8 @@ function Stage() {
         ></i>
       </div>
       <div className={styles.stepList} style={isOpen? {maxHeight:"100vh",paddingTop:"45px"}:{maxHeight:"0px",paddingTop:"0px", transition:"padding 0.2s ease"}}>
-        {dataArray.map((data,index) =>(
-          <Steps key={index}/>
+        {videos.map((data,index) =>(
+          <Steps key={index} video={data} link={props.link}/>
         ))}
       </div>
     </div>

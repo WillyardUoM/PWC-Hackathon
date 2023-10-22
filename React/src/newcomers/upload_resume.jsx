@@ -1,12 +1,18 @@
 import prodStyles from "./proceed.module.css";
-import { Outlet, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import { FileUpload } from "primereact/fileupload";
 import { Toast } from "primereact/toast";
-import React, { useState,useRef } from "react";
+import { useRef } from "react";
 import "./primereactMod.css";
 
 function UploadResume() {
+  let navigate = useNavigate();
+
+  function goTo() {
+    navigate("/Education");
+  }
+
   const toast = useRef(null);
 
   const onUpload = () => {
@@ -63,6 +69,7 @@ function UploadResume() {
               border: "none",
               backgroundColor: "#1E1E1E",
             }}
+            onClick={goTo}
           >
             Next
           </button>

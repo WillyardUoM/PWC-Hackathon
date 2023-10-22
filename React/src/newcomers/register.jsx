@@ -1,21 +1,120 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-unescaped-entities */
 import styles from "./newcomers.module.css";
 import regStyle from "./register.module.css";
 import "./primereactMod.css";
-import { Outlet, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
 
+//firebase
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../FirebaseComponent/Firebase";
+import { collection, doc, setDoc } from "firebase/firestore";
+
 function Register() {
+  const [fullname, setFullName] = useState("");
+  const [email, setEmail] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState("");
   const gender = [
     { name: "Male", value: "male" },
     { name: "Female", value: "female" },
   ];
+  const [selectedCountry, setSelectedCountry] = useState("");
   const country = [
     { name: "Mauritius", value: "MU" },
     { name: "Rodrigues", value: "ROD" },
   ];
+  const [age, setAge] = useState("");
+  const [password, setPassword] = useState("");
+  const [ageError, setAgeError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  let navigate = useNavigate();
+
+  const handleFullNameChange = (e) => {
+    setFullName(e.target.value);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleGenderChange = (e) => {
+    setSelectedGender(e.target.value);
+  };
+
+  const handleCountryChange = (e) => {
+    setSelectedCountry(e.target.value);
+  };
+
+  const handleAgeChange = (e) => {
+    setAge(e.target.value);
+    setAgeError("");
+  };
+
+  const isPasswordValid = (password) => {
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?])[A-Za-z\d@#$!%^&*?]{8,}$/;
+    return passwordPattern.test(password);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setPasswordError("");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior.
+    if (age < 0) {
+      setAgeError("Age cannot be negative");
+    } else if (!isPasswordValid(password)) {
+      setPasswordError("Use a strong password");
+    } else {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          saveData();
+          //alert("User with email " + user.email + " has been signed up successfully");
+          navigate("/Proceed");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorCode + " " + errorMessage);
+          // ..
+        });
+    }
+  };
+
+  function saveData() {
+    try {
+      // Create a new document in the "users" collection in Firestore
+      // You need to add the Firestore logic here using the 'db' object
+      const usersCollection = collection(db, "Accounts");
+      const userData = doc(usersCollection, email); // Assuming email is the document ID.
+
+      setDoc(userData, {
+        fullName: fullname,
+        email: email,
+        gender: selectedGender,
+        country: selectedCountry,
+        age: parseInt(age),
+      });
+    } catch (e) {
+      alert("Error adding document: " + e);
+    }
+
+    setFullName("");
+    setEmail("");
+    setAge("");
+    setSelectedGender("");
+    setSelectedCountry("");
+    setPassword("");
+    setAgeError("");
+    setPasswordError("");
+  }
 
   return (
     <div className={regStyle.register}>
@@ -27,7 +126,7 @@ function Register() {
           Login with Google
         </button>
         <span>or</span>
-        <form className={regStyle.regForm}>
+        <form className={regStyle.regForm} onSubmit={handleSubmit}>
           <div>
             <span style={{ marginLeft: "10px" }}>
               Full Name <span style={{ color: "#F85500" }}>*</span>
@@ -39,6 +138,8 @@ function Register() {
                 required
                 id="fname"
                 placeholder="Enter your name"
+                value={fullname}
+                onChange={handleFullNameChange}
               />
             </label>
           </div>
@@ -53,6 +154,8 @@ function Register() {
                 required
                 id="email"
                 placeholder="Enter your name"
+                value={email}
+                onChange={handleEmailChange}
               />
             </label>
           </div>
@@ -70,10 +173,7 @@ function Register() {
               />
               <Dropdown
                 value={selectedGender}
-                onChange={(e) => {
-                  setSelectedGender(e.value);
-                  console.log(selectedGender);
-                }}
+                onChange={handleGenderChange}
                 options={gender}
                 optionLabel="name"
                 placeholder="Select your gender"
@@ -95,7 +195,7 @@ function Register() {
               />
               <Dropdown
                 value={selectedCountry}
-                onChange={(e) => setSelectedCountry(e.value)}
+                onChange={handleCountryChange}
                 options={country}
                 optionLabel="name"
                 placeholder="Select your country"
@@ -106,7 +206,17 @@ function Register() {
           <div>
             <span style={{ marginLeft: "10px" }}>
               Age <span style={{ color: "#F85500" }}>*</span>
-            </span>
+            </span>{" "}
+            <p
+              className="error-message"
+              style={{
+                color: "red",
+                margin: "0px 0px 0px 10px",
+                fontSize: "10px",
+              }}
+            >
+              {ageError}
+            </p>
             <label htmlFor="age">
               <input
                 type="number"
@@ -114,6 +224,8 @@ function Register() {
                 required
                 id="age"
                 placeholder="Enter your age"
+                value={age}
+                onChange={handleAgeChange}
               />
             </label>
           </div>
@@ -121,6 +233,16 @@ function Register() {
             <span style={{ marginLeft: "10px" }}>
               Password <span style={{ color: "#F85500" }}>*</span>
             </span>
+            <p
+              className="error-message"
+              style={{
+                color: "red",
+                margin: "0px 0px 0px 10px",
+                fontSize: "10px",
+              }}
+            >
+              {passwordError}
+            </p>
             <label htmlFor="password">
               <input
                 type="password"
@@ -128,6 +250,8 @@ function Register() {
                 required
                 id="password"
                 placeholder="Enter your password"
+                value={password}
+                onChange={handlePasswordChange}
               />
               <i className="fa-regular fa-eye"></i>
             </label>

@@ -1,15 +1,18 @@
 import styles from "../css/academy.module.css";
 
-function RelatedCourse() {
+function RelatedCourse(props) {
+  const handleClick = () =>{
+    props.setLink(props.content.id.videoId);
+  }
   return (
     <>
-      <div className={styles.relatedCourse}>
+      <div className={styles.relatedCourse} onClick={handleClick}>
         <img
-          src="https://marketplace.canva.com/EAFLWIzU_30/1/0/1600w/canva-green-gaming-channel-youtube-thumbnail-dI8DSGBaZK0.jpg"
+          src={props.content.snippet.thumbnails.medium? props.content.snippet.thumbnails.medium.url: ""}
           alt=""
         />
-        <b>Javascript Tuto by Indian Guy</b>
-        <span>Reuben Channel</span>
+        <b>{props.content.snippet.title}</b>
+        <span>{props.content.snippet.channelTitle}</span>
       </div>
     </>
   );
