@@ -132,7 +132,7 @@ function Others() {
 
         <div className={prodStyles.BackNextBtn}>
           <button style={{ border: "2px solid lightgray" }}>
-            <Link to="/proceed" style={{ textDecoration: "none" }}>
+            <Link to="/Career_Goals" style={{ textDecoration: "none" }}>
               Go Back
             </Link>
           </button>

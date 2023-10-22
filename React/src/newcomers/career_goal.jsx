@@ -51,7 +51,7 @@ function CareerGoal() {
     {
       careerPath: "",
       timeAllocate: "",
-      expSalary: "",
+      expSalary: [40000, 60000],
       aspiration: "",
     },
   ]);
@@ -147,7 +147,10 @@ function CareerGoal() {
                   <Slider
                     max={200000}
                     value={range}
-                    onChange={(e) => setRange(e.value)}
+                    onChange={(e) => {
+                      setRange(e.value);
+                      handleInputChange(goals.id, "expSalary", e.value);
+                    }}
                     style={{ width: "100%" }}
                     range
                     step={1000}

@@ -51,8 +51,8 @@ function SkillsAssessment() {
   const [skillArray, setSkillArray] = useState([
     {
       id: 1,
-      skill: "",
-      rate: "",
+      skillName: "",
+      rate: 0,
     },
   ]);
 
@@ -66,8 +66,8 @@ function SkillsAssessment() {
       setSkillArray([
         {
           id: 1,
-          skill: "",
-          rate: "",
+          skillName: "",
+          rate: 0,
         },
       ]);
     }
@@ -76,7 +76,7 @@ function SkillsAssessment() {
   const addSkill = () => {
     const newSkill = {
       id: count,
-      skill: "",
+      skillName: "",
       rate: "",
     };
     setCount(count + 1);
@@ -139,7 +139,7 @@ function SkillsAssessment() {
                       placeholder="Enter the skill name"
                       required
                       onChange={(e) =>
-                        handleInputChange(skill.id, "skill", e.target.value)
+                        handleInputChange(skill.id, "skillName", e.target.value)
                       }
                     />
                   </label>
@@ -148,7 +148,11 @@ function SkillsAssessment() {
                   <span>
                     <b>Rate your Skill</b>
                   </span>
-                  <Skill_slider />
+                  <Skill_slider
+                    onChange={(value) =>
+                      handleInputChange(skill.id, "rate", value)
+                    }
+                  />
                 </div>
               </div>
             </div>
