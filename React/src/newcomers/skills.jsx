@@ -37,7 +37,7 @@ function SkillsAssessment() {
     const docRef = doc(usersCollection, documentId);
 
     updateDoc(docRef, {
-      Skills: skillArray,
+      skills: skillArray,
     })
       .then(() => {
         console.log("Education data saved to Firestore!");

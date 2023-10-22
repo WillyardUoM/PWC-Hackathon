@@ -37,7 +37,7 @@ function Education() {
     const docRef = doc(usersCollection, documentId);
 
     updateDoc(docRef, {
-      Educations: educationArray,
+      educations: educationArray,
     })
       .then(() => {
         console.log("Education data saved to Firestore!");

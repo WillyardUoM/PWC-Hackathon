@@ -31,7 +31,7 @@ function Experience() {
     const docRef = doc(usersCollection, documentId);
 
     updateDoc(docRef, {
-      Experiences: experienceArray,
+      experiences: experienceArray,
     })
       .then(() => {
         console.log("Experience data saved to Firestore!");
