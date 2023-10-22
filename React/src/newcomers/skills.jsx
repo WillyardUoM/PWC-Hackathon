@@ -1,58 +1,106 @@
+/* eslint-disable no-unused-vars */
 import styles from "./newcomers.module.css";
 import prodStyles from "./proceed.module.css";
-import { Outlet, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import { Slider } from "primereact/slider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./primereactMod.css";
 import Skill_slider from "./skill_slider";
 
+//firebase
+import { auth } from "../FirebaseComponent/Firebase";
+import { db } from "../FirebaseComponent/Firebase";
+import { collection, doc, updateDoc } from "firebase/firestore";
+
 function SkillsAssessment() {
+  let navigate = useNavigate();
+  //db
+  const [user, setUser] = useState(null);
+  const [documentId, setDocumentId] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setDocumentId(user.email);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  function saveToDB() {
+    const usersCollection = collection(db, "Accounts");
+    const docRef = doc(usersCollection, documentId);
+
+    updateDoc(docRef, {
+      skills: skillArray,
+    })
+      .then(() => {
+        console.log("Education data saved to Firestore!");
+        navigate("/Career_Goals");
+      })
+      .catch((error) => {
+        console.error("Error saving education data:", error);
+      });
+  }
+
+  const [skillArray, setSkillArray] = useState([
+    {
+      id: 1,
+      skillName: "",
+      rate: 0,
+    },
+  ]);
+
   const [range, setRange] = useState(0);
   const [count, setCount] = useState(2);
   const [skillCode, setSkillCode] = useState([]);
 
+  useEffect(() => {
+    if (skillArray.length === 0) {
+      // Initialize with one form if the array is empty
+      setSkillArray([
+        {
+          id: 1,
+          skillName: "",
+          rate: 0,
+        },
+      ]);
+    }
+  }, [skillArray]);
+
   const addSkill = () => {
-    setCount((prevCount) => prevCount + 1);
-    const newSkill = (
-      <div className="item" style={{ marginBottom: "20px" }}>
-        <div className={prodStyles.eduHead}>
-          <h4>Skill {count}</h4>
-        </div>
-        <div className={prodStyles.fields}>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Skill name <span style={{ color: "#f85500" }}>*</span>
-            </span>
-            <label htmlFor="skill">
-              <input
-                type="text"
-                name="skill"
-                id="skill"
-                placeholder="Enter the skill name"
-                required
-              />
-            </label>
-          </div>
-          <div style={{ flex: "100%" }}>
-            <span>
-              <b>Rate your Skill</b>
-            </span>
-            <Skill_slider />
-          </div>
-        </div>
-      </div>
-    );
-    setSkillCode([...skillCode, newSkill]);
+    const newSkill = {
+      id: count,
+      skillName: "",
+      rate: "",
+    };
+    setCount(count + 1);
+    setSkillArray([...skillArray, newSkill]);
   };
 
   const deleteSkill = () => {
-    const skillList = document.getElementsByClassName("item");
-    if (skillList.length == 0) {
+    if (skillArray.length === 0) {
       return;
     }
     setCount(count - 1);
-    skillList[skillList.length - 1].remove();
+    const updatedSkillArray = [...skillArray];
+    updatedSkillArray.pop();
+    setSkillArray(updatedSkillArray);
+  };
+
+  const handleInputChange = (id, field, value) => {
+    const updatedSkillArray = skillArray.map((skill) => {
+      if (skill.id === id) {
+        return { ...skill, [field]: value };
+      }
+      return skill;
+    });
+    setSkillArray(updatedSkillArray);
   };
 
   return (
@@ -68,40 +116,52 @@ function SkillsAssessment() {
           <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
         </div>
 
-        <form id="skills" className={prodStyles.eduList}>
-          <div style={{ marginBottom: "20px" }}>
-            <div className={prodStyles.eduHead}>
-              <h4>Skill 1</h4>
-            </div>
-            <div className={prodStyles.fields}>
-              <div>
-                <span style={{ marginLeft: "10px" }}>
-                  Skill name <span style={{ color: "#f85500" }}>*</span>
-                </span>
-                <label htmlFor="skill">
-                  <input
-                    type="text"
-                    name="skill"
-                    id="skill"
-                    placeholder="Enter the skill name"
-                    required
+        <div id="skills" className={prodStyles.eduList}>
+          {skillArray.map((skill) => (
+            <div
+              className="item"
+              key={skill.id}
+              style={{ marginBottom: "20px" }}
+            >
+              <div className={prodStyles.eduHead}>
+                <h4>Skill {skill.id}</h4>
+              </div>
+              <div className={prodStyles.fields}>
+                <div>
+                  <span style={{ marginLeft: "10px" }}>
+                    Skill name <span style={{ color: "#f85500" }}>*</span>
+                  </span>
+                  <label htmlFor="skill">
+                    <input
+                      type="text"
+                      name="skill"
+                      id="skill"
+                      placeholder="Enter the skill name"
+                      required
+                      onChange={(e) =>
+                        handleInputChange(skill.id, "skillName", e.target.value)
+                      }
+                    />
+                  </label>
+                </div>
+                <div style={{ flex: "100%" }}>
+                  <span>
+                    <b>Rate your Skill</b>
+                  </span>
+                  <Skill_slider
+                    onChange={(value) =>
+                      handleInputChange(skill.id, "rate", value)
+                    }
                   />
-                </label>
-              </div>
-              <div style={{ flex: "100%" }}>
-                <span>
-                  <b>Rate your Skill</b>
-                </span>
-                <Skill_slider />
+                </div>
               </div>
             </div>
-          </div>
-          {skillCode}
-        </form>
+          ))}
+        </div>
 
         <div className={prodStyles.BackNextBtn}>
           <button style={{ border: "2px solid lightgray" }}>
-            <Link to="/proceed" style={{ textDecoration: "none" }}>
+            <Link to="/experience" style={{ textDecoration: "none" }}>
               Go Back
             </Link>
           </button>
@@ -120,6 +180,7 @@ function SkillsAssessment() {
               border: "none",
               backgroundColor: "#1E1E1E",
             }}
+            onClick={saveToDB}
           >
             Next
           </button>

@@ -1,9 +1,15 @@
+/* eslint-disable react/prop-types */
 import { Slider } from "primereact/slider";
 import { useState } from "react";
 import "./primereactMod.css";
 
-function Skill_slider() {
+function Skill_slider({ onChange }) {
   const [range, setRange] = useState(0);
+
+  const handleRangeChange = (e) => {
+    setRange(e.value);
+    onChange(e.value);
+  };
 
   return (
     <>
@@ -32,7 +38,7 @@ function Skill_slider() {
       <Slider
         max={10}
         value={range}
-        onChange={(e) => setRange(e.value)}
+        onChange={handleRangeChange}
         style={{ width: "100%" }}
       />
     </>

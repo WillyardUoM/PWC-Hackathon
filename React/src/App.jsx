@@ -1,15 +1,13 @@
 import NewComers from "./newcomers/newcomers";
-import { HashRouter } from 'react-router-dom';
+import { HashRouter } from "react-router-dom";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
-import 'primeicons/primeicons.css';
-import Academy from "./Academy/Academy";
-import Dash from "./Dashboard/Dashboard";
+import "primeicons/primeicons.css";
 
 function App() {
   return (
     <>
       <HashRouter>
-        <Dash />
+        <NewComers />
       </HashRouter>
     </>
   );
