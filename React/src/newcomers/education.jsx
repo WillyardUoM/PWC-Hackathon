@@ -1,112 +1,119 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+import { useState, useEffect } from "react";
 import styles from "./newcomers.module.css";
 import prodStyles from "./proceed.module.css";
-import { Outlet, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import { Dropdown } from "primereact/dropdown";
-import { useState } from "react";
 import "./primereactMod.css";
 
+//firebase
+import { auth } from "../FirebaseComponent/Firebase";
+import { db } from "../FirebaseComponent/Firebase";
+import { collection, doc, updateDoc } from "firebase/firestore";
+
 function Education() {
-  const [selectedDegree, setSelectedDegree] = useState("");
-  const [eduCode, setEduCode] = useState([]);
+  let navigate = useNavigate();
+  //db
+  const [user, setUser] = useState(null);
+  const [documentId, setDocumentId] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setDocumentId(user.email);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  function saveToDB() {
+    const usersCollection = collection(db, "Accounts");
+    const docRef = doc(usersCollection, documentId);
+
+    updateDoc(docRef, {
+      Educations: educationArray,
+    })
+      .then(() => {
+        console.log("Education data saved to Firestore!");
+        navigate("/Experience");
+      })
+      .catch((error) => {
+        console.error("Error saving education data:", error);
+      });
+  }
+
+  //const [selectedDegree, setSelectedDegree] = useState("");
+  const [educationArray, setEducationArray] = useState([
+    {
+      id: 1,
+      university: "",
+      degree: "",
+      field: "",
+      cpa: "",
+      isEnrolled: false,
+    },
+  ]);
+
   const [count, setCount] = useState(2);
-  const degree = [
-    { name: "Undergraduate", value: "Bachelor" },
-    { name: "Masters", value: "Master" },
+
+  const degreeOptions = [
+    { label: "Undergraduate", value: "Bachelor" },
+    { label: "Masters", value: "Master" },
   ];
 
+  useEffect(() => {
+    if (educationArray.length === 0) {
+      // Initialize with one form if the array is empty
+      setEducationArray([
+        {
+          id: 1,
+          university: "",
+          degree: "",
+          field: "",
+          cpa: "",
+          isEnrolled: false,
+        },
+      ]);
+    }
+  }, [educationArray]);
+
   const addEducation = () => {
-    setCount((prevCount) => prevCount + 1);
-    const newEducation = (
-      <div className="item" key={count}>
-        <div className={prodStyles.eduHead}>
-          <h4>Education {count}</h4>
-        </div>
-        <div className={prodStyles.fields}>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              School or University <span style={{ color: "#f85500" }}>*</span>
-            </span>
-            <label htmlFor="school">
-              <input
-                type="text"
-                name="school"
-                id="school"
-                placeholder="Enter your school name"
-                required
-              />
-            </label>
-          </div>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Degree <span style={{ color: "#F85500" }}>*</span>
-            </span>
-            <label htmlFor="">
-              <input
-                required
-                type="text"
-                name="degree"
-                id="degree"
-                value={selectedDegree}
-                readOnly
-              />
-              <Dropdown
-                value={selectedDegree}
-                onChange={(e) => setSelectedDegree(e.value)}
-                options={degree}
-                optionLabel="name"
-                placeholder="Select your Degree/Certification"
-                className={styles.dropdown}
-              />
-            </label>
-          </div>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Field of Study <span style={{ color: "#f85500" }}>*</span>
-            </span>
-            <label htmlFor="Field">
-              <input
-                type="text"
-                name="field"
-                id="field"
-                placeholder="Enter Study field"
-                required
-              />
-            </label>
-          </div>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              CPA <span style={{ color: "#f85500" }}>*</span>
-            </span>
-            <label htmlFor="cpa">
-              <input
-                type="number"
-                name="cpa"
-                id="cpa"
-                placeholder="Enter your CPA"
-                required
-              />
-            </label>
-          </div>
-        </div>
-        <div>
-          <label htmlFor="enroll">
-            <input type="checkbox" name="enroll" id="enroll" />
-            <span>I am currently enrolled in this course</span>
-          </label>
-        </div>
-      </div>
-    );
-    setEduCode([...eduCode, newEducation]);
+    const newEducation = {
+      id: count,
+      university: "",
+      degree: "",
+      field: "",
+      cpa: "",
+      isEnrolled: false,
+    };
+    setCount(count + 1);
+    setEducationArray([...educationArray, newEducation]);
   };
 
   const deleteEducation = () => {
-    const educationList = document.getElementsByClassName("item");
-    if (educationList.length == 0) {
+    if (educationArray.length === 0) {
       return;
     }
     setCount(count - 1);
-    educationList[educationList.length - 1].remove();
+    const updatedEducationArray = [...educationArray];
+    updatedEducationArray.pop();
+    setEducationArray(updatedEducationArray);
+  };
+
+  const handleInputChange = (id, field, value) => {
+    const updatedEducationArray = educationArray.map((education) => {
+      if (education.id === id) {
+        return { ...education, [field]: value };
+      }
+      return education;
+    });
+    setEducationArray(updatedEducationArray);
   };
 
   return (
@@ -119,95 +126,118 @@ function Education() {
         </p>
         <div className={prodStyles.progressBar}>
           <span style={{ color: "gray", fontSize: "14px" }}>80% Completed</span>
-          <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
+          <ProgressBar style={{ height: "15px" }} value={80} />
         </div>
 
-        <form id="education" className={prodStyles.eduList}>
-          <div>
-            <div className={prodStyles.eduHead}>
-              <h4>Education 1</h4>
+        <div id="education" className={prodStyles.eduList}>
+          {educationArray.map((education) => (
+            <div className="item" key={education.id}>
+              <div className={prodStyles.eduHead}>
+                <h4>Education {education.id}</h4>
+              </div>
+              <div className={prodStyles.fields}>
+                <div>
+                  <span style={{ marginLeft: "10px" }}>
+                    School or University{" "}
+                    <span style={{ color: "#f85500" }}>*</span>
+                  </span>
+                  <label htmlFor="school">
+                    <input
+                      type="text"
+                      name="school"
+                      id="school"
+                      placeholder="Enter your school name"
+                      value={education.school}
+                      onChange={(e) =>
+                        handleInputChange(
+                          education.id,
+                          "university",
+                          e.target.value
+                        )
+                      }
+                      required
+                    />
+                  </label>
+                </div>
+                <div>
+                  <span style={{ marginLeft: "10px" }}>
+                    Degree <span style={{ color: "#F85500" }}>*</span>
+                  </span>
+                  <label htmlFor="degree">
+                    <Dropdown
+                      value={education.degree}
+                      onChange={(e) =>
+                        handleInputChange(education.id, "degree", e.value)
+                      }
+                      options={degreeOptions}
+                      optionLabel="label"
+                      placeholder="Select your Degree/Certification"
+                      className={styles.dropdown}
+                    />
+                  </label>
+                </div>
+                <div>
+                  <span style={{ marginLeft: "10px" }}>
+                    Field of Study <span style={{ color: "#f85500" }}>*</span>
+                  </span>
+                  <label htmlFor="field">
+                    <input
+                      type="text"
+                      name="field"
+                      id="field"
+                      placeholder="Enter Study field"
+                      value={education.field}
+                      onChange={(e) =>
+                        handleInputChange(education.id, "field", e.target.value)
+                      }
+                      required
+                    />
+                  </label>
+                </div>
+                <div>
+                  <span style={{ marginLeft: "10px" }}>
+                    CPA <span style={{ color: "#f85500" }}>*</span>
+                  </span>
+                  <label htmlFor="cpa">
+                    <input
+                      type="number"
+                      name="cpa"
+                      id="cpa"
+                      placeholder="Enter your CPA"
+                      value={education.cpa}
+                      onChange={(e) =>
+                        handleInputChange(education.id, "cpa", e.target.value)
+                      }
+                      required
+                    />
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label htmlFor={`enroll-${education.id}`}>
+                  <input
+                    type="checkbox"
+                    name={`enroll-${education.id}`}
+                    id={`enroll-${education.id}`}
+                    checked={education.isEnrolled}
+                    onChange={(e) =>
+                      handleInputChange(
+                        education.id,
+                        "isEnrolled",
+                        e.target.checked
+                      )
+                    }
+                  />
+                  <span>I am currently enrolled in this course</span>
+                </label>
+              </div>
             </div>
-            <div className={prodStyles.fields}>
-              <div>
-                <span style={{ marginLeft: "10px" }}>
-                  School or University{" "}
-                  <span style={{ color: "#f85500" }}>*</span>
-                </span>
-                <label htmlFor="school">
-                  <input
-                    type="text"
-                    name="school"
-                    id="school"
-                    placeholder="Enter your school name"
-                    required
-                  />
-                </label>
-              </div>
-              <div>
-                <span style={{ marginLeft: "10px" }}>
-                  Degree <span style={{ color: "#F85500" }}>*</span>
-                </span>
-                <label htmlFor="">
-                  <input
-                    required
-                    type="text"
-                    name="degree"
-                    id="degree"
-                    value={selectedDegree}
-                    readOnly
-                  />
-                  <Dropdown
-                    value={selectedDegree}
-                    onChange={(e) => setSelectedDegree(e.value)}
-                    options={degree}
-                    optionLabel="name"
-                    placeholder="Select your Degree/Certification"
-                    className={styles.dropdown}
-                  />
-                </label>
-              </div>
-              <div>
-                <span style={{ marginLeft: "10px" }}>
-                  Field of Study <span style={{ color: "#f85500" }}>*</span>
-                </span>
-                <label htmlFor="Field">
-                  <input
-                    type="text"
-                    name="field"
-                    id="field"
-                    placeholder="Enter Study field"
-                    required
-                  />
-                </label>
-              </div>
-              <div>
-                <span style={{ marginLeft: "10px" }}>
-                  CPA <span style={{ color: "#f85500" }}>*</span>
-                </span>
-                <label htmlFor="cpa">
-                  <input
-                    type="number"
-                    name="cpa"
-                    id="cpa"
-                    placeholder="Enter your CPA"
-                    required
-                  />
-                </label>
-              </div>
-            </div>
-            <div>
-              <label htmlFor="enroll">
-                <input type="checkbox" name="enroll" id="enroll" />
-                <span>I am currently enrolled in this course</span>
-              </label>
-            </div>
-          </div>
-          {eduCode}
-        </form>
+          ))}
+        </div>
 
         <div className={prodStyles.BackNextBtn}>
           <button style={{ border: "2px solid lightgray" }}>
-            <Link to="/proceed" style={{ textDecoration: "none" }}>
+            <Link to="/upload_resume" style={{ textDecoration: "none" }}>
               Go Back
             </Link>
           </button>
@@ -221,6 +251,7 @@ function Education() {
           <button
             form="education"
             type="submit"
+            onClick={saveToDB}
             style={{
               color: "white",
               border: "none",

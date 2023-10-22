@@ -1,10 +1,17 @@
+/* eslint-disable no-unused-vars */
 import styles from "./newcomers.module.css";
 import prodStyles from "./proceed.module.css";
-import { Outlet, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import "./primereactMod.css";
 
 function Proceed() {
+  let navigate = useNavigate();
+
+  function goTo() {
+    navigate("/Upload_resume");
+  }
+
   return (
     <>
       <div className={prodStyles.proceed}>
@@ -14,29 +21,33 @@ function Proceed() {
           <ProgressBar style={{ height: "15px" }} value={10}></ProgressBar>
         </div>
         <div className={prodStyles.methods}>
-        <div>
+          <div>
             <Link to="/LinkedinUrl" style={{ textDecoration: "none" }}>
-              <i class="fa-brands fa-linkedin-in"></i>
+              <i className="fa-brands fa-linkedin-in"></i>
               <h3>LinkedIn Url</h3>
               <span>Retrieve information via LinkedIn</span>
             </Link>
           </div>
           <div>
             <Link to="/Education" style={{ textDecoration: "none" }}>
-              <i class="fa-regular fa-file-lines"></i>
+              <i className="fa-regular fa-file-lines"></i>
               <h3>Form Format</h3>
               <span>Enter your details manually in a form</span>
             </Link>
           </div>
           <div>
             <Link to="/Upload_Resume" style={{ textDecoration: "none" }}>
-              <i class="fa-regular fa-file-pdf"></i>
+              <i className="fa-regular fa-file-pdf"></i>
               <h3>Resume Scanner</h3>
               <span>Upload Resume and retrieve information</span>
             </Link>
           </div>
         </div>
-        <button style={{ margin: "0" }} className={prodStyles.nextBtn}>
+        <button
+          style={{ margin: "0" }}
+          className={prodStyles.nextBtn}
+          onClick={goTo}
+        >
           Next
         </button>
       </div>

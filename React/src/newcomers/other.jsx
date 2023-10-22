@@ -1,9 +1,67 @@
+/* eslint-disable no-unused-vars */
 import prodStyles from "./proceed.module.css";
-import { Outlet, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import "./primereactMod.css";
 
+//firebase
+import { auth } from "../FirebaseComponent/Firebase";
+import { db } from "../FirebaseComponent/Firebase";
+import { collection, doc, updateDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+
 function Others() {
+  let navigate = useNavigate();
+  //db
+  const [user, setUser] = useState(null);
+  const [documentId, setDocumentId] = useState(null);
+  const [motivation, setMotivation] = useState("");
+  const [challenges, setChallenges] = useState("");
+  const [comments, setComments] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setDocumentId(user.email);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleMotivationChange = (e) => {
+    setMotivation(e.target.value);
+  };
+
+  const handleChallengesChange = (e) => {
+    setChallenges(e.target.value);
+  };
+
+  const handleCommentsChange = (e) => {
+    setComments(e.target.value);
+  };
+
+  function saveToDB() {
+    const usersCollection = collection(db, "Accounts");
+    const docRef = doc(usersCollection, documentId);
+
+    updateDoc(docRef, {
+      motivation: motivation,
+      challenges: challenges,
+      comments: comments,
+    })
+      .then(() => {
+        console.log("Other datas saved to Firestore!");
+        navigate("/Dashboard");
+      })
+      .catch((error) => {
+        console.error("Error saving other data:", error);
+      });
+  }
+
   return (
     <>
       <div className={prodStyles.proceed}>
@@ -17,7 +75,7 @@ function Others() {
           <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
         </div>
 
-        <form id="others" className={prodStyles.eduList}>
+        <div id="others" className={prodStyles.eduList}>
           <div className={prodStyles.fields}>
             <div>
               <span>
@@ -31,6 +89,8 @@ function Others() {
                   style={{ width: "100%" }}
                   required
                   placeholder="Why do you want to pursue this career path?&#10;What are your short-term and long-term goals?"
+                  value={motivation}
+                  onChange={handleMotivationChange}
                 ></textarea>
               </label>
             </div>
@@ -46,6 +106,8 @@ function Others() {
                   style={{ width: "100%" }}
                   required
                   placeholder="Any specific challenges, concerns, or obstacles that should be considered in the plan"
+                  value={challenges}
+                  onChange={handleChallengesChange}
                 ></textarea>
               </label>
             </div>
@@ -60,11 +122,13 @@ function Others() {
                   rows={3}
                   style={{ width: "100%" }}
                   placeholder="Any other information or specific preferences the user want to provide"
+                  value={comments}
+                  onChange={handleCommentsChange}
                 ></textarea>
               </label>
             </div>
           </div>
-        </form>
+        </div>
 
         <div className={prodStyles.BackNextBtn}>
           <button style={{ border: "2px solid lightgray" }}>
@@ -80,6 +144,7 @@ function Others() {
               border: "none",
               backgroundColor: "#1E1E1E",
             }}
+            onClick={saveToDB}
           >
             Submit
           </button>

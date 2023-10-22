@@ -1,7 +1,43 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-unescaped-entities */
+import { useState } from "react";
 import styles from "./newcomers.module.css";
-import { Outlet, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+//firebase
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../FirebaseComponent/Firebase";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  let navigate = useNavigate();
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Perform login using Firebase Authentication
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        //alert("User with email " + user.email + " has logged in successfully");
+        navigate("/Dashboard");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorCode + " " + errorMessage);
+      });
+  };
+
   return (
     <>
       <div className={styles.login}>
@@ -12,7 +48,7 @@ function Login() {
           Login with Google
         </button>
         <span>or</span>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <span style={{ marginLeft: "10px" }}>
               Email <span style={{ color: "#f85500" }}>*</span>
@@ -24,6 +60,8 @@ function Login() {
                 id="email"
                 placeholder="Enter your name"
                 required
+                value={email}
+                onChange={handleEmailChange}
               />
             </label>
           </div>
@@ -38,6 +76,8 @@ function Login() {
                 id="password"
                 placeholder="Enter your password"
                 required
+                value={password}
+                onChange={handlePasswordChange}
               />
               <i className="fa-regular fa-eye"></i>
             </label>
@@ -48,10 +88,8 @@ function Login() {
               color: "white",
               marginBottom: "0px",
             }}
-            
           >
             Login
-
           </button>
         </form>
         <p style={{ fontSize: "14px" }}>

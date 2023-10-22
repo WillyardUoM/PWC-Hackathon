@@ -1,84 +1,105 @@
-import styles from "./newcomers.module.css";
-import prodStyles from "./proceed.module.css";
-import { Outlet, Link } from "react-router-dom";
+/* eslint-disable no-unused-vars */
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import { Dropdown } from "primereact/dropdown";
-import { useState } from "react";
-import "./primereactMod.css";
+import { collection, doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../FirebaseComponent/Firebase";
+import prodStyles from "./proceed.module.css";
 
 function Experience() {
-  const [workCode, setWorkCode] = useState([]);
+  let navigate = useNavigate();
+  //db
+  const [user, setUser] = useState(null);
+  const [documentId, setDocumentId] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setDocumentId(user.email);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  function saveToDB() {
+    const usersCollection = collection(db, "Accounts");
+    const docRef = doc(usersCollection, documentId);
+
+    updateDoc(docRef, {
+      Experiences: experienceArray,
+    })
+      .then(() => {
+        console.log("Experience data saved to Firestore!");
+        navigate("/Skill_Assessment");
+      })
+      .catch((error) => {
+        console.error("Error saving experience data:", error);
+      });
+  }
+
+  const [experienceArray, setExperienceArray] = useState([
+    {
+      id: 1,
+      jobTitle: "",
+      company: "",
+      exp: "",
+      isCurrent: false,
+    },
+  ]);
+
   const [count, setCount] = useState(2);
+
+  useEffect(() => {
+    if (experienceArray.length === 0) {
+      // Initialize with one form if the array is empty
+      setExperienceArray([
+        {
+          id: 1,
+          jobTitle: "",
+          company: "",
+          exp: "",
+          isCurrent: false,
+        },
+      ]);
+    }
+  }, [experienceArray]);
 
   const addWorkExp = () => {
     setCount((prevCount) => prevCount + 1);
-    const newWorkExp = (
-      <div className="item" key={count}>
-        <div className={prodStyles.eduHead}>
-          <h4>Work Experinece {count}</h4>
-        </div>
-        <div className={prodStyles.fields}>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Job Title <span style={{ color: "#f85500" }}>*</span>
-            </span>
-            <label htmlFor="jobTitle">
-              <input
-                type="text"
-                name="jobTitle"
-                id="jobTitle"
-                placeholder="Enter your job title"
-                required
-              />
-            </label>
-          </div>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Company <span style={{ color: "#f85500" }}>*</span>
-            </span>
-            <label htmlFor="company">
-              <input
-                type="text"
-                name="company"
-                id="company"
-                placeholder="Enter your company name"
-                required
-              />
-            </label>
-          </div>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Experience <span style={{ color: "#f85500" }}>*</span>
-            </span>
-            <label htmlFor="exp">
-              <input
-                type="number"
-                name="exp"
-                id="exp"
-                placeholder="Enter experience in years"
-                required
-              />
-            </label>
-          </div>
-        </div>
-        <div>
-          <label htmlFor="enroll">
-            <input type="checkbox" name="enroll" id="enroll" />
-            <span>I currently work here</span>
-          </label>
-        </div>
-      </div>
-    );
-    setWorkCode([...workCode, newWorkExp]);
+    const newExp = {
+      id: count,
+      jobTitle: "",
+      company: "",
+      exp: "",
+      isCurrent: false,
+    };
+    setCount(count + 1);
+    setExperienceArray([...experienceArray, newExp]);
   };
 
   const deleteWorkExperience = () => {
-    const workExpList = document.getElementsByClassName("item");
-    if (workExpList.length == 0) {
+    if (experienceArray.length === 0) {
       return;
     }
     setCount(count - 1);
-    workExpList[workExpList.length - 1].remove();
+    const updatedExperienceArray = [...experienceArray];
+    updatedExperienceArray.pop();
+    setExperienceArray(updatedExperienceArray);
+  };
+
+  const handleInputChange = (id, field, value) => {
+    const updatedExperienceArray = experienceArray.map((experience) => {
+      if (experience.id === id) {
+        return { ...experience, [field]: value };
+      }
+      return experience;
+    });
+    setExperienceArray(updatedExperienceArray);
   };
 
   return (
@@ -94,68 +115,104 @@ function Experience() {
           <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
         </div>
 
-        <form id="experience" className={prodStyles.eduList}>
+        <div id="experience" className={prodStyles.eduList}>
           <div>
-            <div className={prodStyles.eduHead}>
-              <h4>Work Experinece 1</h4>
-            </div>
-            <div className={prodStyles.fields}>
-              <div>
-                <span style={{ marginLeft: "10px" }}>
-                  Job Title <span style={{ color: "#f85500" }}>*</span>
-                </span>
-                <label htmlFor="jobTitle">
-                  <input
-                    type="text"
-                    name="jobTitle"
-                    id="jobTitle"
-                    placeholder="Enter your job title"
-                    required
-                  />
-                </label>
+            {experienceArray.map((experience) => (
+              <div className="item" key={experience.id}>
+                <div className={prodStyles.eduHead}>
+                  <h4>Work Experience {experience.id}</h4>
+                </div>
+                <div className={prodStyles.fields}>
+                  <div>
+                    <span style={{ marginLeft: "10px" }}>
+                      Job Title <span style={{ color: "#f85500" }}>*</span>
+                    </span>
+                    <label htmlFor="jobTitle">
+                      <input
+                        type="text"
+                        name="jobTitle"
+                        id="jobTitle"
+                        placeholder="Enter your job title"
+                        required
+                        onChange={(e) =>
+                          handleInputChange(
+                            experience.id,
+                            "jobTitle",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <span style={{ marginLeft: "10px" }}>
+                      Company <span style={{ color: "#f85500" }}>*</span>
+                    </span>
+                    <label htmlFor="company">
+                      <input
+                        type="text"
+                        name="company"
+                        id="company"
+                        placeholder="Enter your company name"
+                        required
+                        onChange={(e) =>
+                          handleInputChange(
+                            experience.id,
+                            "company",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <span style={{ marginLeft: "10px" }}>
+                      Experience <span style={{ color: "#f85500" }}>*</span>
+                    </span>
+                    <label htmlFor="exp">
+                      <input
+                        type="number"
+                        name="exp"
+                        id="exp"
+                        placeholder="Enter experience in years"
+                        required
+                        onChange={(e) =>
+                          handleInputChange(
+                            experience.id,
+                            "exp",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </label>
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor={`enroll-${experience.id}`}>
+                    <input
+                      type="checkbox"
+                      name={`enroll-${experience.id}`}
+                      id={`enroll-${experience.id}`}
+                      checked={experience.isCurrent}
+                      onChange={(e) =>
+                        handleInputChange(
+                          experience.id,
+                          "isCurrent",
+                          e.target.checked
+                        )
+                      }
+                    />
+                    <span>I currently work here</span>
+                  </label>
+                </div>
               </div>
-              <div>
-                <span style={{ marginLeft: "10px" }}>
-                  Company <span style={{ color: "#f85500" }}>*</span>
-                </span>
-                <label htmlFor="company">
-                  <input
-                    type="text"
-                    name="company"
-                    id="company"
-                    placeholder="Enter your company name"
-                    required
-                  />
-                </label>
-              </div>
-              <div>
-                <span style={{ marginLeft: "10px" }}>
-                  Experience <span style={{ color: "#f85500" }}>*</span>
-                </span>
-                <label htmlFor="exp">
-                  <input
-                    type="number"
-                    name="exp"
-                    id="exp"
-                    placeholder="Enter experience in years"
-                    required
-                  />
-                </label>
-              </div>
-            </div>
-            <div>
-              <label htmlFor="enroll">
-                <input type="checkbox" name="enroll" id="enroll" />
-                <span>I currently work here</span>
-              </label>
-            </div>
+            ))}
           </div>
-          {workCode}
-        </form>
+        </div>
 
         <div className={prodStyles.BackNextBtn}>
           <button style={{ border: "2px solid lightgray" }}>
-            <Link to="/proceed" style={{ textDecoration: "none" }}>
+            <Link to="/education" style={{ textDecoration: "none" }}>
               Go Back
             </Link>
           </button>
@@ -174,6 +231,7 @@ function Experience() {
               border: "none",
               backgroundColor: "#1E1E1E",
             }}
+            onClick={saveToDB}
           >
             Next
           </button>
