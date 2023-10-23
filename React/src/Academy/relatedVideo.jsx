@@ -3,7 +3,7 @@ import axios from "axios";
 class YoutubeRelatedVideos {
   constructor() {
     this.headers = {
-      "X-RapidAPI-Key": "1920d81ca7msh9a68d528b0a0084p16d27ajsn5ac766993e7f",
+      "X-RapidAPI-Key": "1920d81ca7msh9a68d528b0a0084p16d27ajsn5ac766993e7f000",
       "X-RapidAPI-Host": "youtube-v3-lite.p.rapidapi.com",
     };
   }

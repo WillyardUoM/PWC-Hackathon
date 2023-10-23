@@ -8,7 +8,11 @@ import './Style/App.css'
 import TaskList from './TaskList';
 import { Knob } from 'primereact/knob';
 import { Dialog } from 'primereact/dialog';
-
+import { SLayout, SMain } from "../components/Layout/styles";
+import { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme } from "../styles/theme";
+import Sidebar from "../components/Sidebar/Sidebar";
+export const ThemeContext = React.createContext(null);
 
 import { InputText } from 'primereact/inputtext';
 
@@ -78,7 +82,8 @@ const HomePage = () => {
     const [search, setSearch] = useState('');
     const [apiResponse, setApiResponse] = useState([]);
     const [value, setValue] = useState(60);
-
+    const [theme] = useState("light");
+    const themeStyle = theme === "light" ? lightTheme : darkTheme;
     const runAPICall = async (userInput) => {
         const response = await fetch(`${API_URL}&s=${userInput}`);
         const data = await response.json();
@@ -123,74 +128,79 @@ const HomePage = () => {
     }
 
     return (
-        <div className="main">
+        <ThemeProvider theme={themeStyle}>
+            <SLayout>
+                <Sidebar />
+                <div className="main">
 
-            <div className="sec1">
-                <div className="part1">
-                    <div className="header">
-                        <h3>Your Result</h3>
-                        <Toast ref={toast} />
-                        <ConfirmDialog className='confirmDialog' visible={visible} onHide={() => setVisible(false)} message="Are you sure you want to proceed?"
-                            header="Confirmation" icon="pi pi-exclamation-triangle" accept={accept} reject={reject} />
-                        <div className="card flex justify-content-center">
-                            <Button className='btn' icon="pi pi-check" onClick={() => setVisible(true)} label="Confirm" />
+                    <div className="sec1">
+                        <div className="part1">
+                            <div className="header">
+                                <h3>Your Result</h3>
+                                <Toast ref={toast} />
+                                <ConfirmDialog className='confirmDialog' visible={visible} onHide={() => setVisible(false)} message="Are you sure you want to proceed?"
+                                    header="Confirmation" icon="pi pi-exclamation-triangle" accept={accept} reject={reject} />
+                                <div className="card flex justify-content-center">
+                                    <Button className='btn' icon="pi pi-check" onClick={() => setVisible(true)} label="Confirm" />
+                                </div>
+                            </div>
+                            <div className="boxes">
+                                <div className="box"></div>
+                                <div className="box"></div>
+                                <div className="box"></div>
+
+                            </div>
+                        </div>
+                        <div className="part2">
+                            <div className="card flex justify-content-center">
+                                <Knob value={value} onChange={(e) => setValue(e.value)} size={200} />
+                            </div>
                         </div>
                     </div>
-                    <div className="boxes">
-                        <div className="box"></div>
-                        <div className="box"></div>
-                        <div className="box"></div>
-
-                    </div>
-                </div>
-                <div className="part2">
-                    <div className="card flex justify-content-center">
-                        <Knob value={value} onChange={(e) => setValue(e.value)} size={200} />
-                    </div>
-                </div>
-            </div>
-            <div className="sec2">
-                <div className="part1">
-<div className="popup">
-<span className="p-input-icon-left">
-                        <i className="pi pi-search" onClick={() => runAPICall(search)} />
-                        <InputText placeholder="Search" value={search}
-                            onChange={(e) => setSearch(e.target.value)} />
-                    </span>
-                    <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible2(true)} />
-</div>
-
-            <Dialog header="Header" visible={visible2} style={{ width: '70vw' }} onHide={() => setVisible2(false)}>
-            <div className="app">
-
-
-{apiResponse?.learningroadmap && apiResponse.learningroadmap.length > 0 ? (
-    <TaskList apiResponse={apiResponse} />
-) : (
-    <div className="empty">
-        <h2>No tasks available</h2>
-    </div>
-)}
-</div>
-            </Dialog>
-                    <div className="app">
-
-
-                        {apiResponse?.learningroadmap && apiResponse.learningroadmap.length > 0 ? (
-                            <TaskList apiResponse={apiResponse} />
-                        ) : (
-                            <div className="empty">
-                                <h2>No tasks available</h2>
+                    <div className="sec2">
+                        <div className="part1">
+                            <div className="popup">
+                                <span className="p-input-icon-left">
+                                    <i className="pi pi-search" onClick={() => runAPICall(search)} />
+                                    <InputText placeholder="Search" value={search}
+                                        onChange={(e) => setSearch(e.target.value)} />
+                                </span>
+                                <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible2(true)} />
                             </div>
-                        )}
+
+                            <Dialog header="Header" visible={visible2} style={{ width: '70vw' }} onHide={() => setVisible2(false)}>
+                                <div className="app">
+
+
+                                    {apiResponse?.learningroadmap && apiResponse.learningroadmap.length > 0 ? (
+                                        <TaskList apiResponse={apiResponse} />
+                                    ) : (
+                                        <div className="empty">
+                                            <h2>No tasks available</h2>
+                                        </div>
+                                    )}
+                                </div>
+                            </Dialog>
+                            <div className="app">
+
+
+                                {apiResponse?.learningroadmap && apiResponse.learningroadmap.length > 0 ? (
+                                    <TaskList apiResponse={apiResponse} />
+                                ) : (
+                                    <div className="empty">
+                                        <h2>No tasks available</h2>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div className="part2">
+
+                        </div>
                     </div>
-                </div>
-                <div className="part2">
 
                 </div>
-            </div>
-
-        </div>
+            </SLayout>
+        </ThemeProvider>
     )
 }
 
