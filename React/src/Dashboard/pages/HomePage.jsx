@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
@@ -10,6 +10,7 @@ import { Knob } from 'primereact/knob';
 import { Dialog } from 'primereact/dialog';
 import { SLayout, SMain } from "../components/Layout/styles";
 import { ThemeProvider } from "styled-components";
+import PalmAI from "../../Api/palm";
 import { darkTheme, lightTheme } from "../styles/theme";
 import Sidebar from "../components/Sidebar/Sidebar";
 export const ThemeContext = React.createContext(null);
@@ -79,53 +80,57 @@ An example is shown:
 
 const HomePage = () => {
     const [movies, setMovies] = useState([]);
-    const [search, setSearch] = useState('');
-    const [apiResponse, setApiResponse] = useState([]);
-    const [value, setValue] = useState(60);
-    const [theme] = useState("light");
-    const themeStyle = theme === "light" ? lightTheme : darkTheme;
-    const runAPICall = async (userInput) => {
-        const response = await fetch(`${API_URL}&s=${userInput}`);
-        const data = await response.json();
+  const [search, setSearch] = useState("");
+  const [apiResponse, setApiResponse] = useState([]);
+  const [value, setValue] = useState(60);
 
-        setMovies(data.Search);
+  const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
+  const [theme] = useState("light");
+  const themeStyle = theme === "light" ? lightTheme : darkTheme;
 
-        let content;
-        content = userInput + promptString;
+  const toast = useRef(null);
 
-        fetch('http://localhost:9000/testAPI/send-message', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ content }),
-        })
-            .then((res) => res.text())
-            .then(() => {
-                fetch('http://localhost:9000/testAPI')
-                    .then((res) => res.text())
-                    .then((res) => {
-                        console.log(formatJSONString(res));
-                        setApiResponse(JSON.parse(formatJSONString(res)));
-                    });
-            }
-            )
-            .catch((error) => {
-                console.error(error);
-            });
-    };
-    const [visible, setVisible] = useState(false);
-    const [visible2, setVisible2] = useState(false);
+  const palm = new PalmAI();
 
-    const toast = useRef(null);
+  const runAPICall = async (userInput) => {
+    let content = userInput + promptString;
 
-    const accept = () => {
-        toast.current.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
-    }
+    const response = await palm.getResponse(content);
 
-    const reject = () => {
-        toast.current.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-    }
+    const jsonData = JSON.parse(formatJSONString(response));
+    setApiResponse(jsonData);
+    console.log(jsonData);
+    localStorage.setItem("playlist",`${formatJSONString(response)}`);
+  };
+
+  const retrieveFromDB = ()=>{
+    //retrieve appropriate data from db and return
+    return "UI/UX";
+  };
+
+  useEffect(() => {
+    const storedValue = retrieveFromDB();
+    runAPICall(storedValue);
+  }, []);
+
+  const accept = () => {
+    toast.current.show({
+      severity: "info",
+      summary: "Confirmed",
+      detail: "You have accepted",
+      life: 300000,
+    });
+  };
+
+  const reject = () => {
+    toast.current.show({
+      severity: "warn",
+      summary: "Rejected",
+      detail: "You have rejected",
+      life: 300000,
+    });
+  };
 
     return (
         <ThemeProvider theme={themeStyle}>
