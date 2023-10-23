@@ -16,7 +16,6 @@ import Sidebar from "../../../React/src/Dashboard/components/Sidebar/Sidebar";
 export const ThemeContext = React.createContext(null);
 
 function Academy(props) {
-
   const [isTimelineOpen, setTimelineOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
 
@@ -116,27 +115,32 @@ function Academy(props) {
 
   return (
     <>
-      <div className={styles.academy}>
-        <AcademyHeader isOpen={isSearchOpen} />
-        <div className={styles.row}>
-          <StageList
-            style={timelineStyle}
-            playlist={videoDetails}
-            link={retrieveVideoID}
-          />
-          <CourseDetail link={currentLink} setLink={retrieveVideoID} />
-        </div>
-        <div className={styles.actionButton}>
-          <SpeedDial
-            model={items}
-            radius={100}
-            type="quarter-circle"
-            direction="up-left"
-            style={{ right: 0, bottom: 0 }}
-            buttonClassName="p-button-help"
-          />
-        </div>
-      </div>
+      <ThemeProvider theme={themeStyle}>
+        <SLayout>
+          <Sidebar />
+          <div className={styles.academy}>
+            <AcademyHeader isOpen={isSearchOpen} />
+            <div className={styles.row}>
+              <StageList
+                style={timelineStyle}
+                playlist={videoDetails}
+                link={retrieveVideoID}
+              />
+              <CourseDetail link={currentLink} setLink={retrieveVideoID} />
+            </div>
+            <div className={styles.actionButton}>
+              <SpeedDial
+                model={items}
+                radius={100}
+                type="quarter-circle"
+                direction="up-left"
+                style={{ right: 0, bottom: 0 }}
+                buttonClassName="p-button-help"
+              />
+            </div>
+          </div>
+        </SLayout>
+      </ThemeProvider>
     </>
   );
 }
