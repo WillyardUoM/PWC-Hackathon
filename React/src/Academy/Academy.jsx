@@ -8,13 +8,15 @@ import styles from "./css/academy.module.css";
 import Youtube from "./youtube";
 import { SLayout } from "../../../React/src/Dashboard/components/Layout/styles";
 import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme } from "../../../React/src/Dashboard/styles/theme";
+import {
+  darkTheme,
+  lightTheme,
+} from "../../../React/src/Dashboard/styles/theme";
 import Sidebar from "../../../React/src/Dashboard/components/Sidebar/Sidebar";
 export const ThemeContext = React.createContext(null);
 
 function Academy(props) {
-  const [theme] = useState("light");
-  const themeStyle = theme === "light" ? lightTheme : darkTheme;
+
   const [isTimelineOpen, setTimelineOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
 
@@ -79,10 +81,12 @@ function Academy(props) {
 
   // Define a function to search for videos using the Youtube class
   const searchPlayList = async () => {
+    const json = localStorage.getItem("playlist");
+    const jsonData = JSON.parse(json);
     try {
       const playListID = await Promise.all(
-        topics.map(async (topic) => {
-          const data = await youtube.searchPlayList(topic);
+        jsonData.learningroadmap.map(async (topic) => {
+          const data = await youtube.searchPlayList(topic.course);
           return data.data[0].playlistId;
         })
       );
@@ -111,30 +115,29 @@ function Academy(props) {
   }, [videoDetails]);
 
   return (
-
-      <ThemeProvider theme={themeStyle}>
-        <SLayout>
-          <Sidebar />
-          <div className={styles.academy}>
-            <AcademyHeader isOpen={isSearchOpen} />
-            <div className={styles.row}>
-              <StageList style={timelineStyle} playlist={videoDetails} link={retrieveVideoID} />
-              <CourseDetail link={currentLink} setLink={retrieveVideoID} />
-            </div>
-            <div className={styles.actionButton}>
-              <SpeedDial
-                model={items}
-                radius={100}
-                type="quarter-circle"
-                direction="up-left"
-                style={{ right: 0, bottom: 0 }}
-                buttonClassName="p-button-help"
-              />
-            </div>
-          </div>
-        </SLayout>
-      </ThemeProvider>
-
+    <>
+      <div className={styles.academy}>
+        <AcademyHeader isOpen={isSearchOpen} />
+        <div className={styles.row}>
+          <StageList
+            style={timelineStyle}
+            playlist={videoDetails}
+            link={retrieveVideoID}
+          />
+          <CourseDetail link={currentLink} setLink={retrieveVideoID} />
+        </div>
+        <div className={styles.actionButton}>
+          <SpeedDial
+            model={items}
+            radius={100}
+            type="quarter-circle"
+            direction="up-left"
+            style={{ right: 0, bottom: 0 }}
+            buttonClassName="p-button-help"
+          />
+        </div>
+      </div>
+    </>
   );
 }
 
