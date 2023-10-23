@@ -21,14 +21,11 @@ body {
 
 .sec1 {
   display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 20px 20px 0 20px;
   border-radius: 10px;
 }
 
 .sec1 .part1 .header {
-  margin: 10px;
+
 
   display: flex;
   justify-content: space-between;
@@ -37,7 +34,7 @@ body {
 
 .sec1 .part1 .boxes {
   display: flex;
-  height: 200px;
+  height: 300px;
 }
 
 .box {
@@ -47,22 +44,19 @@ body {
   border-radius: 10px;
   margin: 10px;
   padding: 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .sec1 .part1 {
-  width: 60%;
-  margin: 20px;
   padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-
 }
 
 .sec1 .part2 {
   width: 30%;
   margin: 20px;
   padding: 20px;
-  background-color: #ffffff;
+  
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -70,7 +64,7 @@ body {
 }
 
 .sec2 {
-  background-color: #F4F5F8;
+
   display: flex;
   justify-content: center;
   width: 100%;
@@ -82,26 +76,13 @@ body {
 .sec2 .part1 {
   display: flex;
   flex-direction: column;
-  width: 60%;
-  margin: 20px;
-
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-
   overflow-y: auto;
 }
 
-.sec2 .part2 {
-  width: 30%;
-  margin: 20px;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-}
 
 .card{
   overflow: hidden;
+  
 }
 .app{
   margin: 10px 0 0 0;

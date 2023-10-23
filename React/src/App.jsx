@@ -8,12 +8,7 @@ import CareerGoal from "./newcomers/career_goal";
 import LinkedInURL from "./newcomers/linkedinURL";
 import Academy from "./Academy/Academy";
 import React, { useState } from "react";
-import styles from "./newcomers/newcomers.module.css";
-import SlideShow from "./newcomers/slideshow";
-import { SLayout, SMain } from "./Dashboard/components/Layout/styles";
-import Sidebar from "./Dashboard/components/Sidebar/Sidebar";
-import HomePage from "./Dashboard/pages/HomePage";
-import { ThemeProvider } from "styled-components";
+import HomePage from "./Dashboard/pages/Homepage/HomePage";
 import { darkTheme, lightTheme } from "./Dashboard/styles/theme";
 import './Dashboard/styles/globalStyles'
 import './Dashboard/styleOver.css'
@@ -25,6 +20,7 @@ import Others from "./newcomers/other";
 import Login from "./newcomers/login";
 import Profile from './Dashboard/pages/profile';
 import Chatbox from './Dashboard/pages/Chatbot/chatbot';
+import statusQw from './Dashboard/pages/Homepage/progress';
 export const ThemeContext = React.createContext(null);
 
 function App() {
@@ -54,6 +50,8 @@ function App() {
               <Route path="/Academy" element={<Academy />} />
               <Route path="/Profile" element={<Profile />} />
               <Route path="/Chatbox" element={<Chatbox />} />
+              <Route path="/calendar" element={statusQw} />
+
 
 
             </Routes>
