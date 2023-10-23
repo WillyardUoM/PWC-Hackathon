@@ -16,6 +16,9 @@ import Sidebar from "../../../React/src/Dashboard/components/Sidebar/Sidebar";
 export const ThemeContext = React.createContext(null);
 
 function Academy(props) {
+  const [theme] = useState("light");
+  const themeStyle = theme === "light" ? lightTheme : darkTheme;
+  
   const [isTimelineOpen, setTimelineOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
 
