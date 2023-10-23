@@ -31,9 +31,7 @@ function App() {
   return (
     <>
       <HashRouter>
-        <div className={styles.main}>
-          <div className={styles.left_side}>
-            <img className={styles.logo} src="images/pwc-logo.png" alt="" />
+
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/Register" element={<Register />} />
@@ -46,11 +44,8 @@ function App() {
               <Route exact path="/Others" element={<Others />} />
               <Route exact path="/LinkedinUrl" element={<LinkedInURL />} />
             </Routes>
-          </div>
-          <div className={styles.right_side}>
-            <SlideShow />
-          </div>
-        </div>
+
+
 
             <Routes>
               <Route path="/Dashboard" element={<HomePage />} />

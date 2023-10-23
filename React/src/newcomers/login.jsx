@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./newcomers.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import SlideShow from "./slideshow";
 
 //firebase
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -53,7 +54,10 @@ function Login() {
 
   return (
     <>
-      {user ? (
+          <div className={styles.main}>
+            <div className={styles.left_side}>
+              <img className={styles.logo} src="images/pwc-logo.png" alt="" />
+              {user ? (
         navigate("/Dashboard")
       ) : (
         <div className={styles.login}>
@@ -119,6 +123,13 @@ function Login() {
           </p>
         </div>
       )}
+            </div>
+            <div className={styles.right_side}>
+              <SlideShow />
+            </div>
+          </div>
+
+
     </>
   );
 }

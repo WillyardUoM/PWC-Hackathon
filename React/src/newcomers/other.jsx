@@ -3,7 +3,8 @@ import prodStyles from "./proceed.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import "./primereactMod.css";
-
+import styles from "./newcomers.module.css";
+import SlideShow from "./slideshow";
 //firebase
 import { auth } from "../FirebaseComponent/Firebase";
 import { db } from "../FirebaseComponent/Firebase";
@@ -64,7 +65,10 @@ function Others() {
 
   return (
     <>
-      <div className={prodStyles.proceed}>
+              <div className={styles.main}>
+            <div className={styles.left_side}>
+              <img className={styles.logo} src="images/pwc-logo.png" alt="" />
+              <div className={prodStyles.proceed}>
         <h1>Others</h1>
         <p style={{ color: "gray", margin: "0px 0 20px", fontSize: "14px" }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
@@ -150,6 +154,12 @@ function Others() {
           </button>
         </div>
       </div>
+            </div>
+            <div className={styles.right_side}>
+              <SlideShow />
+            </div>
+          </div>
+
     </>
   );
 }

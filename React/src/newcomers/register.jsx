@@ -6,6 +6,7 @@ import "./primereactMod.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
+import SlideShow from "./slideshow";
 
 //firebase
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -117,163 +118,173 @@ function Register() {
   }
 
   return (
-    <div className={regStyle.register}>
-      <div className={styles.login}>
-        <h1>Create your account</h1>
-        <span>Let's get started today for free</span>
-        <button className={styles.googleBtn}>
-          <img src="images/google.png" height={"25"} alt="" />
-          Login with Google
-        </button>
-        <span>or</span>
-        <form className={regStyle.regForm} onSubmit={handleSubmit}>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Full Name <span style={{ color: "#F85500" }}>*</span>
-            </span>
-            <label htmlFor="fname">
-              <input
-                type="text"
-                name="fname"
-                required
-                id="fname"
-                placeholder="Enter your name"
-                value={fullname}
-                onChange={handleFullNameChange}
-              />
-            </label>
-          </div>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Email <span style={{ color: "#F85500" }}>*</span>
-            </span>
-            <label htmlFor="email">
-              <input
-                type="email"
-                name="email"
-                required
-                id="email"
-                placeholder="Enter your name"
-                value={email}
-                onChange={handleEmailChange}
-              />
-            </label>
-          </div>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Gender <span style={{ color: "#F85500" }}>*</span>
-            </span>
-            <label htmlFor="">
-              <input
-                type="text"
-                value={selectedGender}
-                required
-                name="gender"
-                id="gender"
-              />
-              <Dropdown
-                value={selectedGender}
-                onChange={handleGenderChange}
-                options={gender}
-                optionLabel="name"
-                placeholder="Select your gender"
-                className={styles.dropdown}
-              />
-            </label>
-          </div>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Country <span style={{ color: "#F85500" }}>*</span>
-            </span>
-            <label htmlFor="">
-              <input
-                required
-                type="text"
-                name="country"
-                id="country"
-                value={selectedCountry}
-              />
-              <Dropdown
-                value={selectedCountry}
-                onChange={handleCountryChange}
-                options={country}
-                optionLabel="name"
-                placeholder="Select your country"
-                className={styles.dropdown}
-              />
-            </label>
-          </div>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Age <span style={{ color: "#F85500" }}>*</span>
-            </span>{" "}
-            <p
-              className="error-message"
-              style={{
-                color: "red",
-                margin: "0px 0px 0px 10px",
-                fontSize: "10px",
-              }}
-            >
-              {ageError}
+    <div className={styles.main}>
+      <div className={styles.left_side}>
+        <img className={styles.logo} src="images/pwc-logo.png" alt="" />
+        <div className={regStyle.register}>
+          <div className={styles.login}>
+            <h1>Create your account</h1>
+            <span>Let's get started today for free</span>
+            <button className={styles.googleBtn}>
+              <img src="images/google.png" height={"25"} alt="" />
+              Login with Google
+            </button>
+            <span>or</span>
+            <form className={regStyle.regForm} onSubmit={handleSubmit}>
+              <div>
+                <span style={{ marginLeft: "10px" }}>
+                  Full Name <span style={{ color: "#F85500" }}>*</span>
+                </span>
+                <label htmlFor="fname">
+                  <input
+                    type="text"
+                    name="fname"
+                    required
+                    id="fname"
+                    placeholder="Enter your name"
+                    value={fullname}
+                    onChange={handleFullNameChange}
+                  />
+                </label>
+              </div>
+              <div>
+                <span style={{ marginLeft: "10px" }}>
+                  Email <span style={{ color: "#F85500" }}>*</span>
+                </span>
+                <label htmlFor="email">
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    id="email"
+                    placeholder="Enter your name"
+                    value={email}
+                    onChange={handleEmailChange}
+                  />
+                </label>
+              </div>
+              <div>
+                <span style={{ marginLeft: "10px" }}>
+                  Gender <span style={{ color: "#F85500" }}>*</span>
+                </span>
+                <label htmlFor="">
+                  <input
+                    type="text"
+                    value={selectedGender}
+                    required
+                    name="gender"
+                    id="gender"
+                  />
+                  <Dropdown
+                    value={selectedGender}
+                    onChange={handleGenderChange}
+                    options={gender}
+                    optionLabel="name"
+                    placeholder="Select your gender"
+                    className={styles.dropdown}
+                  />
+                </label>
+              </div>
+              <div>
+                <span style={{ marginLeft: "10px" }}>
+                  Country <span style={{ color: "#F85500" }}>*</span>
+                </span>
+                <label htmlFor="">
+                  <input
+                    required
+                    type="text"
+                    name="country"
+                    id="country"
+                    value={selectedCountry}
+                  />
+                  <Dropdown
+                    value={selectedCountry}
+                    onChange={handleCountryChange}
+                    options={country}
+                    optionLabel="name"
+                    placeholder="Select your country"
+                    className={styles.dropdown}
+                  />
+                </label>
+              </div>
+              <div>
+                <span style={{ marginLeft: "10px" }}>
+                  Age <span style={{ color: "#F85500" }}>*</span>
+                </span>{" "}
+                <p
+                  className="error-message"
+                  style={{
+                    color: "red",
+                    margin: "0px 0px 0px 10px",
+                    fontSize: "10px",
+                  }}
+                >
+                  {ageError}
+                </p>
+                <label htmlFor="age">
+                  <input
+                    type="number"
+                    name="age"
+                    required
+                    id="age"
+                    placeholder="Enter your age"
+                    value={age}
+                    onChange={handleAgeChange}
+                  />
+                </label>
+              </div>
+              <div>
+                <span style={{ marginLeft: "10px" }}>
+                  Password <span style={{ color: "#F85500" }}>*</span>
+                </span>
+                <p
+                  className="error-message"
+                  style={{
+                    color: "red",
+                    margin: "0px 0px 0px 10px",
+                    fontSize: "10px",
+                  }}
+                >
+                  {passwordError}
+                </p>
+                <label htmlFor="password">
+                  <input
+                    type="password"
+                    name="password"
+                    required
+                    id="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                  />
+                  <i className="fa-regular fa-eye"></i>
+                </label>
+              </div>
+              <button
+                style={{
+                  backgroundColor: "#1E1E1E",
+                  color: "white",
+                  marginBottom: "0px",
+                }}
+              >
+                Register
+              </button>
+            </form>
+            <p style={{ fontSize: "14px" }}>
+              Already have an account?{" "}
+              <Link to="/" style={{ color: "#F85500", textDecoration: "none" }}>
+                Log In
+              </Link>
             </p>
-            <label htmlFor="age">
-              <input
-                type="number"
-                name="age"
-                required
-                id="age"
-                placeholder="Enter your age"
-                value={age}
-                onChange={handleAgeChange}
-              />
-            </label>
           </div>
-          <div>
-            <span style={{ marginLeft: "10px" }}>
-              Password <span style={{ color: "#F85500" }}>*</span>
-            </span>
-            <p
-              className="error-message"
-              style={{
-                color: "red",
-                margin: "0px 0px 0px 10px",
-                fontSize: "10px",
-              }}
-            >
-              {passwordError}
-            </p>
-            <label htmlFor="password">
-              <input
-                type="password"
-                name="password"
-                required
-                id="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={handlePasswordChange}
-              />
-              <i className="fa-regular fa-eye"></i>
-            </label>
-          </div>
-          <button
-            style={{
-              backgroundColor: "#1E1E1E",
-              color: "white",
-              marginBottom: "0px",
-            }}
-          >
-            Register
-          </button>
-        </form>
-        <p style={{ fontSize: "14px" }}>
-          Already have an account?{" "}
-          <Link to="/" style={{ color: "#F85500", textDecoration: "none" }}>
-            Log In
-          </Link>
-        </p>
+        </div>
+      </div>
+      <div className={styles.right_side}>
+        <SlideShow />
       </div>
     </div>
+
+
   );
 }
 

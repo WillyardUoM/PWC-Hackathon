@@ -5,7 +5,8 @@ import { FileUpload } from "primereact/fileupload";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import "./primereactMod.css";
-
+import styles from "./newcomers.module.css";
+import SlideShow from "./slideshow";
 function UploadResume() {
   let navigate = useNavigate();
 
@@ -25,7 +26,10 @@ function UploadResume() {
   };
   return (
     <>
-      <div className={prodStyles.proceed}>
+              <div className={styles.main}>
+            <div className={styles.left_side}>
+              <img className={styles.logo} src="images/pwc-logo.png" alt="" />
+              <div className={prodStyles.proceed}>
         <h1>Upload Your Resume</h1>
         <p style={{ color: "gray", margin: "0px 0 20px", fontSize: "14px" }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
@@ -75,6 +79,13 @@ function UploadResume() {
           </button>
         </div>
       </div>
+            </div>
+            <div className={styles.right_side}>
+              <SlideShow />
+            </div>
+          </div>
+  
+
     </>
   );
 }

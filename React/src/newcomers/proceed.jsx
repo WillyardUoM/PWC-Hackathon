@@ -4,6 +4,7 @@ import prodStyles from "./proceed.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import "./primereactMod.css";
+import SlideShow from "./slideshow";
 
 function Proceed() {
   let navigate = useNavigate();
@@ -14,7 +15,10 @@ function Proceed() {
 
   return (
     <>
-      <div className={prodStyles.proceed}>
+              <div className={styles.main}>
+            <div className={styles.left_side}>
+              <img className={styles.logo} src="images/pwc-logo.png" alt="" />
+              <div className={prodStyles.proceed}>
         <h1>How would you like to proceed</h1>
         <div className={prodStyles.progressBar}>
           <span style={{ color: "gray" }}>10% Completed</span>
@@ -51,6 +55,12 @@ function Proceed() {
           Next
         </button>
       </div>
+            </div>
+            <div className={styles.right_side}>
+              <SlideShow />
+            </div>
+          </div>
+
     </>
   );
 }

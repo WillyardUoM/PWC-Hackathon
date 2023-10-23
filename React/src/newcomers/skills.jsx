@@ -7,7 +7,7 @@ import { Slider } from "primereact/slider";
 import { useEffect, useState } from "react";
 import "./primereactMod.css";
 import Skill_slider from "./skill_slider";
-
+import SlideShow from "./slideshow";
 //firebase
 import { auth } from "../FirebaseComponent/Firebase";
 import { db } from "../FirebaseComponent/Firebase";
@@ -105,87 +105,96 @@ function SkillsAssessment() {
 
   return (
     <>
-      <div className={prodStyles.proceed}>
-        <h1>Skill Assessment</h1>
-        <p style={{ color: "gray", margin: "0px 0 20px", fontSize: "14px" }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
-          nobis, aliquid quia, quasi totam eligendi debitis itaque eaque
-        </p>
-        <div className={prodStyles.progressBar}>
-          <span style={{ color: "gray", fontSize: "14px" }}>80% Completed</span>
-          <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
-        </div>
-
-        <div id="skills" className={prodStyles.eduList}>
-          {skillArray.map((skill) => (
-            <div
-              className="item"
-              key={skill.id}
-              style={{ marginBottom: "20px" }}
-            >
-              <div className={prodStyles.eduHead}>
-                <h4>Skill {skill.id}</h4>
-              </div>
-              <div className={prodStyles.fields}>
-                <div>
-                  <span style={{ marginLeft: "10px" }}>
-                    Skill name <span style={{ color: "#f85500" }}>*</span>
-                  </span>
-                  <label htmlFor="skill">
-                    <input
-                      type="text"
-                      name="skill"
-                      id="skill"
-                      placeholder="Enter the skill name"
-                      required
-                      onChange={(e) =>
-                        handleInputChange(skill.id, "skillName", e.target.value)
-                      }
-                    />
-                  </label>
-                </div>
-                <div style={{ flex: "100%" }}>
-                  <span>
-                    <b>Rate your Skill</b>
-                  </span>
-                  <Skill_slider
-                    onChange={(value) =>
-                      handleInputChange(skill.id, "rate", value)
-                    }
-                  />
-                </div>
-              </div>
+      <div className={styles.main}>
+        <div className={styles.left_side}>
+          <img className={styles.logo} src="images/pwc-logo.png" alt="" />
+          <div className={prodStyles.proceed}>
+            <h1>Skill Assessment</h1>
+            <p style={{ color: "gray", margin: "0px 0 20px", fontSize: "14px" }}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+              nobis, aliquid quia, quasi totam eligendi debitis itaque eaque
+            </p>
+            <div className={prodStyles.progressBar}>
+              <span style={{ color: "gray", fontSize: "14px" }}>80% Completed</span>
+              <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
             </div>
-          ))}
-        </div>
 
-        <div className={prodStyles.BackNextBtn}>
-          <button style={{ border: "2px solid lightgray" }}>
-            <Link to="/experience" style={{ textDecoration: "none" }}>
-              Go Back
-            </Link>
-          </button>
-          <button
-            onClick={deleteSkill}
-            style={{ color: "#F85500", border: "2px solid #F85500" }}
-          >
-            Delete Skill
-          </button>
-          <button onClick={addSkill}>Add Another</button>
-          <button
-            form="skills"
-            type="submit"
-            style={{
-              color: "white",
-              border: "none",
-              backgroundColor: "#1E1E1E",
-            }}
-            onClick={saveToDB}
-          >
-            Next
-          </button>
+            <div id="skills" className={prodStyles.eduList}>
+              {skillArray.map((skill) => (
+                <div
+                  className="item"
+                  key={skill.id}
+                  style={{ marginBottom: "20px" }}
+                >
+                  <div className={prodStyles.eduHead}>
+                    <h4>Skill {skill.id}</h4>
+                  </div>
+                  <div className={prodStyles.fields}>
+                    <div>
+                      <span style={{ marginLeft: "10px" }}>
+                        Skill name <span style={{ color: "#f85500" }}>*</span>
+                      </span>
+                      <label htmlFor="skill">
+                        <input
+                          type="text"
+                          name="skill"
+                          id="skill"
+                          placeholder="Enter the skill name"
+                          required
+                          onChange={(e) =>
+                            handleInputChange(skill.id, "skillName", e.target.value)
+                          }
+                        />
+                      </label>
+                    </div>
+                    <div style={{ flex: "100%" }}>
+                      <span>
+                        <b>Rate your Skill</b>
+                      </span>
+                      <Skill_slider
+                        onChange={(value) =>
+                          handleInputChange(skill.id, "rate", value)
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className={prodStyles.BackNextBtn}>
+              <button style={{ border: "2px solid lightgray" }}>
+                <Link to="/experience" style={{ textDecoration: "none" }}>
+                  Go Back
+                </Link>
+              </button>
+              <button
+                onClick={deleteSkill}
+                style={{ color: "#F85500", border: "2px solid #F85500" }}
+              >
+                Delete Skill
+              </button>
+              <button onClick={addSkill}>Add Another</button>
+              <button
+                form="skills"
+                type="submit"
+                style={{
+                  color: "white",
+                  border: "none",
+                  backgroundColor: "#1E1E1E",
+                }}
+                onClick={saveToDB}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className={styles.right_side}>
+          <SlideShow />
         </div>
       </div>
+
     </>
   );
 }
