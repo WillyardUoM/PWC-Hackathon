@@ -23,6 +23,8 @@ import {
 
 import { MdOutlineSchool } from "react-icons/md";
 import { MdLogout, MdOutlineAnalytics } from "react-icons/md";
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { Toast } from 'primereact/toast';
 
 
 
@@ -72,8 +74,8 @@ const Sidebar = () => {
             <SDivider />
 
             {secondaryLinksArray.map(({ icon, label, to }) => (
-             <SLinkContainer key={label} isActive={pathname === to}>
-             <SLink to={to} style={!sidebarOpen ? { width: `fit-content` } : {}}>
+                <SLinkContainer key={label} isActive={pathname === to}>
+                    <SLink to={to} style={!sidebarOpen ? { width: `fit-content` } : {}}>
                         <SLinkIcon>{icon}</SLinkIcon>
                         {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
                     </SLink>
@@ -95,14 +97,10 @@ const linksArray = [
     {
         label: "Training Plan",
         icon: <AiOutlineCalendar />,
-        to: "/statistics",
+        to: "/calendar",
 
     },
-    {
-        label: "Progress Tracker",
-        icon: <AiOutlineFieldTime />,
-        to: "/customers",
-    },
+
 
 ];
 const thirdLinksArray = [
@@ -110,12 +108,12 @@ const thirdLinksArray = [
         label: "Academy",
         icon: <MdOutlineSchool />,
         to: "/Academy",
-        
+
     },
     {
         label: "AI Tutor",
         icon: <AiOutlineRobot />,
-        to: "/Academy",
+        to: "/chatbox",
 
     },
 ];

@@ -113,3 +113,37 @@ body {
   justify-content: space-between;
 }
 
+.headerProfile{
+font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.containerInfo{
+  border-radius: 20px;
+  background-color: #ffffff;
+  height: 100vh;
+  margin: 40px 30px 30px 30px;
+  padding: 10px 30px 30px 30px;
+  overflow-y: auto;
+}
+.group{
+  display:flex;
+  margin-bottom: 30px;
+}
+
+.title{
+  font-size: 20px;
+  font-weight: 600;
+  margin: 10px 20px 30px 10px;
+  
+}
+
+.textBox{
+  width: 100%;
+  margin: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem; /* Adjust the gap value as needed */
+}

@@ -24,6 +24,7 @@ import SkillsAssessment from "./newcomers/skills";
 import Others from "./newcomers/other";
 import Login from "./newcomers/login";
 import Profile from './Dashboard/pages/profile';
+import Chatbox from './Dashboard/pages/Chatbot/chatbot';
 export const ThemeContext = React.createContext(null);
 
 function App() {
@@ -52,6 +53,8 @@ function App() {
               <Route path="/Dashboard" element={<HomePage />} />
               <Route path="/Academy" element={<Academy />} />
               <Route path="/Profile" element={<Profile />} />
+              <Route path="/Chatbox" element={<Chatbox />} />
+
 
             </Routes>
 
