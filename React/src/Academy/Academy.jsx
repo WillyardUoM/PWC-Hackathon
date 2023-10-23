@@ -1,13 +1,20 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { SpeedDial } from "primereact/speeddial";
 import AcademyHeader from "./academy_header";
 import StageList from "./academy_stages";
 import CourseDetail from "./course_detail";
 import styles from "./css/academy.module.css";
 import Youtube from "./youtube";
+import { SLayout } from "../../../React/src/Dashboard/components/Layout/styles";
+import { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme } from "../../../React/src/Dashboard/styles/theme";
+import Sidebar from "../../../React/src/Dashboard/components/Sidebar/Sidebar";
+export const ThemeContext = React.createContext(null);
 
 function Academy(props) {
+  const [theme] = useState("light");
+  const themeStyle = theme === "light" ? lightTheme : darkTheme;
   const [isTimelineOpen, setTimelineOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
 
@@ -15,7 +22,7 @@ function Academy(props) {
 
   const [videoDetails, setVideoDetails] = useState([]);
 
-  const[currentLink, setCurrentLink] = useState("zhpcgpqWc1Q");
+  const [currentLink, setCurrentLink] = useState("zhpcgpqWc1Q");
 
   const topics = [
     "Learn Javascript beginner",
@@ -64,7 +71,7 @@ function Academy(props) {
     }
   };
 
-  const retrieveVideoID =(id) =>{
+  const retrieveVideoID = (id) => {
     setCurrentLink(id);
   };
 
@@ -104,25 +111,30 @@ function Academy(props) {
   }, [videoDetails]);
 
   return (
-    <>
-      <div className={styles.academy}>
-        <AcademyHeader isOpen={isSearchOpen} />
-        <div className={styles.row}>
-          <StageList style={timelineStyle} playlist={videoDetails} link={retrieveVideoID}/>
-          <CourseDetail link={currentLink} setLink={retrieveVideoID}/>
-        </div>
-        <div className={styles.actionButton}>
-          <SpeedDial
-            model={items}
-            radius={100}
-            type="quarter-circle"
-            direction="up-left"
-            style={{ right: 0, bottom: 0 }}
-            buttonClassName="p-button-help"
-          />
-        </div>
-      </div>
-    </>
+
+      <ThemeProvider theme={themeStyle}>
+        <SLayout>
+          <Sidebar />
+          <div className={styles.academy}>
+            <AcademyHeader isOpen={isSearchOpen} />
+            <div className={styles.row}>
+              <StageList style={timelineStyle} playlist={videoDetails} link={retrieveVideoID} />
+              <CourseDetail link={currentLink} setLink={retrieveVideoID} />
+            </div>
+            <div className={styles.actionButton}>
+              <SpeedDial
+                model={items}
+                radius={100}
+                type="quarter-circle"
+                direction="up-left"
+                style={{ right: 0, bottom: 0 }}
+                buttonClassName="p-button-help"
+              />
+            </div>
+          </div>
+        </SLayout>
+      </ThemeProvider>
+
   );
 }
 
