@@ -23,6 +23,7 @@ import UploadResume from "./newcomers/upload_resume";
 import SkillsAssessment from "./newcomers/skills";
 import Others from "./newcomers/other";
 import Login from "./newcomers/login";
+import Profile from './Dashboard/pages/profile';
 export const ThemeContext = React.createContext(null);
 
 function App() {
@@ -49,7 +50,9 @@ function App() {
 
             <Routes>
               <Route path="/Dashboard" element={<HomePage />} />
-              <Route path="/statistics" element={<Academy />} />
+              <Route path="/Academy" element={<Academy />} />
+              <Route path="/Profile" element={<Profile />} />
+
             </Routes>
 
       </HashRouter>

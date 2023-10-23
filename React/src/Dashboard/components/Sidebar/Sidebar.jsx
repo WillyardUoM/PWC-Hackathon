@@ -61,9 +61,9 @@ const Sidebar = () => {
                 </SLinkContainer>
             ))}
             <SDivider />
-            {thirdLinksArray.map(({ icon, label }) => (
-                <SLinkContainer key={label}>
-                    <SLink to="/" style={!sidebarOpen ? { width: `fit-content` } : {}}>
+            {thirdLinksArray.map(({ icon, label, to }) => (
+                <SLinkContainer key={label} isActive={pathname === to}>
+                    <SLink to={to} style={!sidebarOpen ? { width: `fit-content` } : {}}>
                         <SLinkIcon>{icon}</SLinkIcon>
                         {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
                     </SLink>
@@ -71,9 +71,9 @@ const Sidebar = () => {
             ))}
             <SDivider />
 
-            {secondaryLinksArray.map(({ icon, label }) => (
-                <SLinkContainer key={label}>
-                    <SLink to="/" style={!sidebarOpen ? { width: `fit-content` } : {}}>
+            {secondaryLinksArray.map(({ icon, label, to }) => (
+             <SLinkContainer key={label} isActive={pathname === to}>
+             <SLink to={to} style={!sidebarOpen ? { width: `fit-content` } : {}}>
                         <SLinkIcon>{icon}</SLinkIcon>
                         {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
                     </SLink>
@@ -109,17 +109,22 @@ const thirdLinksArray = [
     {
         label: "Academy",
         icon: <MdOutlineSchool />,
+        to: "/Academy",
         
     },
     {
         label: "AI Tutor",
         icon: <AiOutlineRobot />,
+        to: "/Academy",
+
     },
 ];
 const secondaryLinksArray = [
     {
         label: "Settings",
         icon: <AiOutlineSetting />,
+        to: "/Profile",
+
     },
     {
         label: "Logout",
