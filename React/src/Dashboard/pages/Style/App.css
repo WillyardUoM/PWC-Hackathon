@@ -1,4 +1,3 @@
-
 body {
   width: 100%;
   box-sizing: border-box;
@@ -19,44 +18,76 @@ body {
 
 }
 
+.border {
+  border: 0.1px solid #e4e4e463;
+}
+
 .sec1 {
   display: flex;
   border-radius: 10px;
 }
 
-.sec1 .part1 .header {
+.sec1 .part1 {
+  width: 100%;
 
+}
 
+.header {
+  align-items: center;
   display: flex;
   justify-content: space-between;
+  font-weight: 200;
 
 }
 
 .sec1 .part1 .boxes {
   display: flex;
   height: 300px;
+
+
+  justify-content: space-between;
 }
 
 .box {
   width: 100%;
-  border: 1px solid rgb(230, 230, 230);
-  background-color: #ffffff;
   border-radius: 10px;
   margin: 10px;
   padding: 10px;
   display: flex;
+
   justify-content: center;
+
 }
 
-.sec1 .part1 {
-  padding: 20px;
+.p-dropdown-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1E1E1E;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  height: 40px;
+ 
+
+
+}
+
+
+.sec1 .titles {
+
+  font-size: 17px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
 }
 
 .sec1 .part2 {
   width: 30%;
   margin: 20px;
   padding: 20px;
-  
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -65,11 +96,7 @@ body {
 
 .sec2 {
 
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 0 20px;
-  border-radius: 10px;
+
   overflow: auto;
 }
 
@@ -80,28 +107,37 @@ body {
 }
 
 
-.card{
+
+.card {
   overflow: hidden;
-  
+
 }
-.app{
+
+.app {
   margin: 10px 0 0 0;
   overflow-y: auto;
 }
 
-.popup{
+.popup {
   display: flex;
   justify-content: space-between;
+
+}
+.p-dropdown-trigger{
+  padding-right: 10px;
+}
+.popup .drop{
+  margin-right: 20px;
 }
 
-.headerProfile{
-font-size: 14px;
+.headerProfile {
+  font-size: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.containerInfo{
+.containerInfo {
   border-radius: 20px;
   background-color: #ffffff;
   height: 100vh;
@@ -109,22 +145,24 @@ font-size: 14px;
   padding: 10px 30px 30px 30px;
   overflow-y: auto;
 }
-.group{
-  display:flex;
+
+.group {
+  display: flex;
   margin-bottom: 30px;
 }
 
-.title{
+.title {
   font-size: 20px;
   font-weight: 600;
   margin: 10px 20px 30px 10px;
-  
+
 }
 
-.textBox{
+.textBox {
   width: 100%;
   margin: 0 20px;
   display: flex;
   flex-direction: column;
-  gap: .5rem; /* Adjust the gap value as needed */
+  gap: .5rem;
+  /* Adjust the gap value as needed */
 }

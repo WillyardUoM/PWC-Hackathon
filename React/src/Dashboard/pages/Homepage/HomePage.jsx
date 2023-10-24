@@ -17,7 +17,10 @@ export const ThemeContext = React.createContext(null);
 import { Chart } from 'primereact/chart';
 import { InputText } from 'primereact/inputtext';
 import StackedBar from './due';
-
+import { Dropdown } from 'primereact/dropdown';
+import { Skeleton } from 'primereact/skeleton';
+import { Column } from 'primereact/column';
+import { DataTable } from 'primereact/datatable';
 
 function formatJSONString(jsonString) {
 
@@ -80,15 +83,18 @@ An example is shown:
 
 const HomePage = () => {
 
-    const [search, setSearch] = useState("");
     const [apiResponse, setApiResponse] = useState([]);
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
-
-    const [visible, setVisible] = useState(false);
     const [visible2, setVisible2] = useState(false);
     const [theme] = useState("light");
     const themeStyle = theme === "light" ? lightTheme : darkTheme;
+    const [selectedCity, setSelectedCity] = useState(null);
+    const cities = [
+        { name: 'Premium Learning', code: 'NY' },
+        { name: 'Free Learning', code: 'RM' },
+
+    ];
 
     const toast = useRef(null);
 
@@ -158,7 +164,11 @@ const HomePage = () => {
             life: 300000,
         });
     };
+    const items = Array.from({ length: 5 }, (v, i) => i);
 
+    const bodyTemplate = () => {
+        return <Skeleton></Skeleton>
+    }
     return (
         <ThemeProvider theme={themeStyle}>
             <SLayout>
@@ -168,42 +178,52 @@ const HomePage = () => {
                         <div className="sec1">
                             <div className="part1">
                                 <div className="header">
-                                    <h3>Your Progress</h3>
+                                    <h3>Your Progress Tracker</h3>
+
+                                </div>
+                                <div className="border"></div>
+                                <div className="titles">
+                                    <small>Courses Remaining</small>
+                                    <small>Course Progress</small>
+                                    <small>Courses Status</small>
 
                                 </div>
                                 <div className="boxes">
                                     <div className="box">
-                                        
                                         <Chart type="doughnut" data={chartData} options={chartOptions} className="w-full md:w-30rem" />
                                     </div>
+                                    <div className="boxContainer">
+
+                                    </div>
                                     <div className="box">
+
                                         <Sts />
                                     </div>
 
                                     <div className="box">
+
                                         <StackedBar />
                                     </div>
 
 
                                 </div>
+                                <div className="border"></div>
+
                             </div>
 
                         </div>
                         <div className="sec2">
                             <div className="part1">
-                                <div className="popup">
-                                    <span className="p-input-icon-left">
-                                        <i className="pi pi-search" onClick={() => runAPICall(search)} />
-                                        <InputText placeholder="Search" value={search}
-                                            onChange={(e) => setSearch(e.target.value)} />
-                                    </span>
-                                    <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible2(true)} />
+                                <div className="header">
+                                    <h3>Your Learning Journey</h3>
+                                    <div className="popup">
+                                        <Dropdown value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name"
+                                            placeholder="Premium Learning" className="drop" />
+                                        <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible2(true)} />
+                                    </div>
                                 </div>
-
                                 <Dialog header="Header" visible={visible2} style={{ width: '70vw' }} onHide={() => setVisible2(false)}>
                                     <div className="app">
-
-
                                         {apiResponse?.learningroadmap && apiResponse.learningroadmap.length > 0 ? (
                                             <TaskList apiResponse={apiResponse} />
                                         ) : (
@@ -214,19 +234,20 @@ const HomePage = () => {
                                     </div>
                                 </Dialog>
                                 <div className="app">
-
-
                                     {apiResponse?.learningroadmap && apiResponse.learningroadmap.length > 0 ? (
                                         <TaskList apiResponse={apiResponse} />
                                     ) : (
                                         <div className="empty">
-                                            <h2>No tasks available</h2>
+                                            <DataTable value={items} tableStyle={{ minWidth: '50rem' }}>
+                                                <Column field="phase" header="Phase" sortable style={{ width: '10%' }} body={bodyTemplate}></Column>
+                                                <Column field="course" header="Course" style={{ width: '50%' }} body={bodyTemplate}></Column>
+                                                <Column field="progress" header="Progress" sortable style={{ width: '25%' }} body={bodyTemplate}></Column>
+
+                                            </DataTable>
                                         </div>
                                     )}
                                 </div>
-                                
                             </div>
-
                         </div>
                     </div>
                 </div>
