@@ -60,3 +60,7 @@ box-shadow:0 3px 2px 0 rgba(0, 0, 0, 0.032);
   float: right;
 
 }
+
+.dhx_cal_event.dhx_cal_editor{
+  background-color: #3a3a3a;
+}
