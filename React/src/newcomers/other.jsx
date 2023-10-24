@@ -12,7 +12,7 @@ import { collection, doc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 function Others() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   //db
   const [user, setUser] = useState(null);
   const [documentId, setDocumentId] = useState(null);
@@ -70,12 +70,16 @@ function Others() {
           <img className={styles.logo} src="images/pwc-logo.png" alt="" />
           <div className={prodStyles.proceed}>
             <h1>Others</h1>
-            <p style={{ color: "gray", margin: "0px 0 20px", fontSize: "14px" }}>
+            <p
+              style={{ color: "gray", margin: "0px 0 20px", fontSize: "14px" }}
+            >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
               nobis, aliquid quia, quasi totam eligendi debitis itaque eaque
             </p>
             <div className={prodStyles.progressBar}>
-              <span style={{ color: "gray", fontSize: "14px" }}>80% Completed</span>
+              <span style={{ color: "gray", fontSize: "14px" }}>
+                80% Completed
+              </span>
               <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
             </div>
 
@@ -159,7 +163,6 @@ function Others() {
           <SlideShow />
         </div>
       </div>
-
     </>
   );
 }
