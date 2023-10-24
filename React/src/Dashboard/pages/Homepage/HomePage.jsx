@@ -82,48 +82,39 @@ const promptString2 = `
 based on the about information above i want use to accurately output a a learning roadmap in phases by order for the user he can do in json format. The learning roadmap should contain courses available that user can follow online on platform such as coursera, udemy... You should only output the JSON, nothing more. You shoud use your knowledge and filling the json accurately based on the information provided. The learning roadmap should only contain learning phrases and not anything outside that.
 An example is shown:
 {
-    "phases": [
+    "courses": [
       {
-        "name": "Fundamentals",
-        "courses": [
-          {
-            "platform": "Coursera",
-            "name": "JavaScript: The Definitive Guide"
-          },
-          {
-            "platform": "Udemy",
-            "name": "The Complete JavaScript Course (2023)"
-          }
-        ]
+        "platform": "Coursera",
+        "name": "JavaScript: The Definitive Guide",
+        "phaseName": "Fundamentals"
       },
       {
-        "name": "Intermediate",
-        "courses": [
-          {
-            "platform": "Frontend Masters",
-            "name": "JavaScript for React Developers"
-          },
-          {
-            "platform": "Egghead.io",
-            "name": "Learn JavaScript: The Good Parts"
-          }
-        ]
+        "platform": "Udemy",
+        "name": "The Complete JavaScript Course (2023)",
+        "phaseName": "Fundamentals"
       },
       {
-        "name": "Advanced",
-        "courses": [
-          {
-            "platform": "Pluralsight",
-            "name": "Node.js: Advanced Concepts"
-          },
-          {
-            "platform": "Educative.io",
-            "name": "JavaScript Design Patterns"
-          }
-        ]
+        "platform": "Frontend Masters",
+        "name": "JavaScript for React Developers",
+        "phaseName": "Intermediate"
+      },
+      {
+        "platform": "Egghead.io",
+        "name": "Learn JavaScript: The Good Parts",
+        "phaseName": "Intermediate"
+      },
+      {
+        "platform": "Pluralsight",
+        "name": "Node.js: Advanced Concepts",
+        "phaseName": "Advanced"
+      },
+      {
+        "platform": "Educative.io",
+        "name": "JavaScript Design Patterns",
+        "phaseName": "Advanced"
       }
     ]
-  }
+  }  
 `;
 
 const HomePage = () => {
@@ -303,7 +294,7 @@ const HomePage = () => {
                                 ) :
                                     (
                                       <div className="">
-                                        {apiResponse2?.phases && apiResponse2.phases.length > 0 ? (
+                                        {apiResponse2?.courses && apiResponse2.courses.length > 0 ? (
                                             <DetailsCourse apiResponse2={apiResponse2} />
                                         ) : (
                                             <div className="empty">
