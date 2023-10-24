@@ -82,39 +82,47 @@ const promptString2 = `
 based on the about information above i want use to accurately output a a learning roadmap in phases by order for the user he can do in json format. The learning roadmap should contain courses available that user can follow online on platform such as coursera, udemy... You should only output the JSON, nothing more. You shoud use your knowledge and filling the json accurately based on the information provided. The learning roadmap should only contain learning phrases and not anything outside that.
 An example is shown:
 {
-    "courses": [
-      {
-        "platform": "Coursera",
-        "name": "JavaScript: The Definitive Guide",
-        "phaseName": "Fundamentals"
-      },
-      {
-        "platform": "Udemy",
-        "name": "The Complete JavaScript Course (2023)",
-        "phaseName": "Fundamentals"
-      },
-      {
-        "platform": "Frontend Masters",
-        "name": "JavaScript for React Developers",
-        "phaseName": "Intermediate"
-      },
-      {
-        "platform": "Egghead.io",
-        "name": "Learn JavaScript: The Good Parts",
-        "phaseName": "Intermediate"
-      },
-      {
-        "platform": "Pluralsight",
-        "name": "Node.js: Advanced Concepts",
-        "phaseName": "Advanced"
-      },
-      {
-        "platform": "Educative.io",
-        "name": "JavaScript Design Patterns",
-        "phaseName": "Advanced"
-      }
-    ]
-  }  
+  "learningroadmap": [
+    {
+      "phase": "Beginner",
+      "platform": "Coursera",
+      "course": "Introduction to React",
+      "durationInHours": 20,
+      "url": "www.coursera.org/react-intro"
+    },
+
+    {
+      "phase": "Amateur",
+      "platform": "Coursera",
+      "course": "Advanced React and Redux",
+      "durationInHours": 30,
+      "url": "www.coursera.org/advanced-react-redux"
+    },
+
+    {
+      "phase": "Intermediate",
+      "platform": "Coursera",
+      "course": "Testing React Applications",
+      "durationInHours": 15,
+      "url": "www.coursera.org/testing-react"
+    },
+    {
+      "phase": "Intermediate",
+      "platform": "Udemy",
+      "course": "GraphQL with React: The Complete Developer's Guide",
+      "durationInHours": 25,
+      "url": "www.udemy.com/graphql-with-react"
+    },
+
+    {
+      "phase": "Advanced",
+      "platform": "Udemy",
+      "course": "React Native - The Practical Guide",
+      "durationInHours": 30,
+      "url": "www.udemy.com/react-native-practical-guide"
+    }
+  ]
+}
 `;
 
 const HomePage = () => {
@@ -294,7 +302,7 @@ const HomePage = () => {
                                 ) :
                                     (
                                       <div className="">
-                                        {apiResponse2?.courses && apiResponse2.courses.length > 0 ? (
+                                        {apiResponse2?.learningroadmap && apiResponse2.learningroadmap.length > 0 ? (
                                             <DetailsCourse apiResponse2={apiResponse2} />
                                         ) : (
                                             <div className="empty">

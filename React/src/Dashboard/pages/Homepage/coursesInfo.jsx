@@ -9,29 +9,18 @@ function DetailsCourse({ apiResponse2 }) {
   const headerTemplate = (data) => {
     return (
       <React.Fragment>
-        <span>{data.phaseName}</span>
+        <span>{data.phase}</span>
       </React.Fragment>
     );
   };
-  const courseTemplate = (rowData) => {
-    return (
-        <span>{rowData.courses[0].name}</span>
-    );
-};
-const platformTemplate = (rowData) => {
-    return (
-        <span>{rowData.courses[0].platform}</span>
-    );
-};
-
 
   return (
     <div className="card">
       <DataTable
-        value={apiResponse2.courses}
+        value={apiResponse2.learningroadmap}
         rowGroupMode="subheader"
-        groupRowsBy="phaseName"
-        sortField="phaseName"
+        groupRowsBy="phase"
+        sortField="phase"
         expandableRowGroups
         expandedRows={expandedRows}
         onRowToggle={(e) => setExpandedRows(e.data)}
@@ -39,7 +28,7 @@ const platformTemplate = (rowData) => {
         tableStyle={{ minWidth: "50rem" }}
       >
         <Column
-          field="name"
+          field="course"
           header="Course Name"
           sortable
           style={{ width: "10%" }}
@@ -47,6 +36,18 @@ const platformTemplate = (rowData) => {
         <Column
           field="platform"
           header="Platform"
+          sortable
+          style={{ width: "10%" }}
+        ></Column>
+        <Column
+          field="durationInHours"
+          header="Duration(Hours)"
+          sortable
+          style={{ width: "10%" }}
+        ></Column>
+        <Column
+          field="url"
+          header="Website"
           sortable
           style={{ width: "10%" }}
         ></Column>
