@@ -14,7 +14,7 @@ import { db } from "../FirebaseComponent/Firebase";
 import { collection, doc, updateDoc } from "firebase/firestore";
 
 function Education() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   //db
   const [user, setUser] = useState(null);
   const [documentId, setDocumentId] = useState(null);
@@ -123,12 +123,16 @@ function Education() {
           <img className={styles.logo} src="images/pwc-logo.png" alt="" />
           <div className={prodStyles.proceed}>
             <h1>Educational Background</h1>
-            <p style={{ color: "gray", margin: "0px 0 20px", fontSize: "14px" }}>
+            <p
+              style={{ color: "gray", margin: "0px 0 20px", fontSize: "14px" }}
+            >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
               nobis, aliquid quia, quasi totam eligendi debitis itaque eaque
             </p>
             <div className={prodStyles.progressBar}>
-              <span style={{ color: "gray", fontSize: "14px" }}>80% Completed</span>
+              <span style={{ color: "gray", fontSize: "14px" }}>
+                80% Completed
+              </span>
               <ProgressBar style={{ height: "15px" }} value={80} />
             </div>
 
@@ -181,7 +185,8 @@ function Education() {
                     </div>
                     <div>
                       <span style={{ marginLeft: "10px" }}>
-                        Field of Study <span style={{ color: "#f85500" }}>*</span>
+                        Field of Study{" "}
+                        <span style={{ color: "#f85500" }}>*</span>
                       </span>
                       <label htmlFor="field">
                         <input
@@ -191,7 +196,11 @@ function Education() {
                           placeholder="Enter Study field"
                           value={education.field}
                           onChange={(e) =>
-                            handleInputChange(education.id, "field", e.target.value)
+                            handleInputChange(
+                              education.id,
+                              "field",
+                              e.target.value
+                            )
                           }
                           required
                         />
@@ -209,7 +218,11 @@ function Education() {
                           placeholder="Enter your CPA"
                           value={education.cpa}
                           onChange={(e) =>
-                            handleInputChange(education.id, "cpa", e.target.value)
+                            handleInputChange(
+                              education.id,
+                              "cpa",
+                              e.target.value
+                            )
                           }
                           required
                         />
@@ -270,7 +283,6 @@ function Education() {
           <SlideShow />
         </div>
       </div>
-
     </>
   );
 }

@@ -31,7 +31,7 @@ function Register() {
   const [ageError, setAgeError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleFullNameChange = (e) => {
     setFullName(e.target.value);
@@ -283,8 +283,6 @@ function Register() {
         <SlideShow />
       </div>
     </div>
-
-
   );
 }
 

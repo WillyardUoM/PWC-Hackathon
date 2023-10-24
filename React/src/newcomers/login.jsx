@@ -13,6 +13,7 @@ function Login() {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -26,7 +27,7 @@ function Login() {
     return () => unsubscribe();
   }, []);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -48,88 +49,96 @@ function Login() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert(errorCode + " " + errorMessage);
+        setErrorMessage(errorCode);
       });
   };
 
   return (
     <>
-          <div className={styles.main}>
-            <div className={styles.left_side}>
-              <img className={styles.logo} src="images/pwc-logo.png" alt="" />
-              {user ? (
-        navigate("/Dashboard")
-      ) : (
-        <div className={styles.login}>
-          <h1>Login your account</h1>
-          <span>Let's get you back on track</span>
-          <button className={styles.googleBtn}>
-            <img src="images/google.png" height={"25"} alt="" />
-            Login with Google
-          </button>
-          <span>or</span>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <span style={{ marginLeft: "10px" }}>
-                Email <span style={{ color: "#f85500" }}>*</span>
-              </span>
-              <label htmlFor="email">
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Enter your name"
-                  required
-                  value={email}
-                  onChange={handleEmailChange}
-                />
-              </label>
+      <div className={styles.main}>
+        <div className={styles.left_side}>
+          <img className={styles.logo} src="images/pwc-logo.png" alt="" />
+          {user ? (
+            navigate("/Dashboard")
+          ) : (
+            <div className={styles.login}>
+              <h1>Login your account</h1>
+              <span>Let's get you back on track</span>
+              <button className={styles.googleBtn}>
+                <img src="images/google.png" height={"25"} alt="" />
+                Login with Google
+              </button>
+              <span>or</span>
+              <form onSubmit={handleSubmit}>
+                <div>
+                  <span style={{ marginLeft: "10px" }}>
+                    Email <span style={{ color: "#f85500" }}>*</span>
+                  </span>
+                  <label htmlFor="email">
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="Enter your name"
+                      required
+                      value={email}
+                      onChange={handleEmailChange}
+                    />
+                  </label>
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <span style={{ marginLeft: "10px" }}>
+                    Password <span style={{ color: "#f85500" }}>*</span>
+                  </span>
+                  <label htmlFor="password">
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="Enter your password"
+                      required
+                      value={password}
+                      onChange={handlePasswordChange}
+                    />
+                    <i className="fa-regular fa-eye"></i>
+                  </label>
+                </div>
+                <p
+                  className="error-message"
+                  style={{
+                    color: "red",
+                    margin: "0px 0px 10px 5px",
+                    fontSize: "15px",
+                  }}
+                >
+                  {errorMessage}
+                </p>
+                <button
+                  style={{
+                    backgroundColor: "#1E1E1E",
+                    color: "white",
+                    marginBottom: "0px",
+                  }}
+                >
+                  Login
+                </button>
+              </form>
+              <p style={{ fontSize: "14px" }}>
+                Don't have an account?{" "}
+                <Link
+                  to="/Register"
+                  style={{ color: "#f85500", textDecoration: "none" }}
+                >
+                  Sign Up
+                </Link>
+              </p>
             </div>
-            <div style={{ marginBottom: "40px" }}>
-              <span style={{ marginLeft: "10px" }}>
-                Password <span style={{ color: "#f85500" }}>*</span>
-              </span>
-              <label htmlFor="password">
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="Enter your password"
-                  required
-                  value={password}
-                  onChange={handlePasswordChange}
-                />
-                <i className="fa-regular fa-eye"></i>
-              </label>
-            </div>
-            <button
-              style={{
-                backgroundColor: "#1E1E1E",
-                color: "white",
-                marginBottom: "0px",
-              }}
-            >
-              Login
-            </button>
-          </form>
-          <p style={{ fontSize: "14px" }}>
-            Don't have an account?{" "}
-            <Link
-              to="/Register"
-              style={{ color: "#f85500", textDecoration: "none" }}
-            >
-              Sign Up
-            </Link>
-          </p>
+          )}
         </div>
-      )}
-            </div>
-            <div className={styles.right_side}>
-              <SlideShow />
-            </div>
-          </div>
-
-
+        <div className={styles.right_side}>
+          <SlideShow />
+        </div>
+      </div>
     </>
   );
 }
