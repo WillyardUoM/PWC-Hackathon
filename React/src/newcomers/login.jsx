@@ -50,6 +50,9 @@ function Login() {
         const errorCode = error.code;
         const errorMessage = error.message;
         setErrorMessage(errorCode);
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 3000);
       });
   };
 
