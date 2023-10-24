@@ -1,0 +1,22 @@
+.message-area {
+  font-size: 15px;
+  width: 100%;
+  background: #ffffff;
+  height: 200px;
+  overflow: auto;
+  padding-left: 10px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.message-area ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.message-area li:before {
+  content: "\003e";
+  padding-right: 10px;
+}

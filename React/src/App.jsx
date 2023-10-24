@@ -21,6 +21,7 @@ import Login from "./newcomers/login";
 import Profile from "./Dashboard/pages/profile";
 import Chatbox from "./Dashboard/pages/Chatbot/chatbot";
 import Logout from "./FirebaseComponent/Logout";
+import CalendarMain from "./Dashboard/pages/calendarMain";
 export const ThemeContext = React.createContext(null);
 
 function App() {
@@ -52,6 +53,8 @@ function App() {
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Chatbox" element={<Chatbox />} />
           <Route path="/Logout" element={<Logout />} />
+          <Route path="/calendar" element={<CalendarMain />} />
+
         </Routes>
       </HashRouter>
     </>

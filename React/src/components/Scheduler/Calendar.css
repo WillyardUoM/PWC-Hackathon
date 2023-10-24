@@ -1,0 +1,62 @@
+.scheduler-container {
+  height: calc(100vh - 50px);
+  width: 100vw;
+
+}
+
+.dhx_body, .dhx_event_move, .dhx_cal_event_line{
+  background-color: #1a1a1a !important;
+  color: #ffffff;
+}
+
+.tool-bar{
+  background-color: #ffffff !important;
+  display: none;
+}
+
+.time-format-section{
+  display: none;
+}
+
+.dhx_cal_today_button, .dhx_cal_tab {
+  color: rgb(44, 44, 44) !important;
+  border: #3a3a3a 1px solid !important;
+  
+}
+
+.dhx_cal_scale_placeholder{
+box-shadow:0 3px 2px 0 rgba(0, 0, 0, 0.032);
+
+}
+
+.dhx_cal_tab.active{
+  background-color: #0f0f0f !important;
+  color: #ffffff !important;
+
+}
+
+.dhx_cal_navline.dhx_cal_navline_flex .dhx_cal_tab{
+  box-shadow: none;
+}
+.dhx_cal_event_clear{
+
+  color: #090909;
+}
+
+
+  .dhx_cal_ltitle {
+    border-bottom: 1px solid #1a1a1a;
+    background: #1a1a1a;
+
+  }
+.dhx_save_btn_set {
+    border: none;
+    background-color: #f85500;
+}
+.dhx_cancel_btn_set {
+  border: 1px solid #fff;
+  background-color: #fff;
+  color: #1b1b1b;
+  float: right;
+
+}

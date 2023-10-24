@@ -2,13 +2,9 @@ import React from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import './Style/App.css'
-import { ProgressBar } from 'primereact/progressbar';
-import { Skeleton } from 'primereact/skeleton';
+
 function TaskList({ apiResponse }) {
 
-    const bodyTemplate = () => {
-        return <Skeleton></Skeleton>
-    }
 
     return (
         <div className="card">
