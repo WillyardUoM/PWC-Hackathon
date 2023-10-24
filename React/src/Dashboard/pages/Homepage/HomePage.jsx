@@ -38,7 +38,11 @@ function formatJSONString(jsonString) {
 
 const promptString = `
 keep progress 0
-based on the about information above i want use to accurately output a a learning roadmap in phases by order for the user he can do in json format. You should only output the JSON, nothing more. You shoud use your knowledge and filling the json accurately based on the information provided. Also note that the title in the JSON will be used for searching courses on youtube so that the user get revelant videos, so much sure to provide a meanful title. The learning roadmap should only contain learning phrases and not anything outside that.
+based on the about information above i want use to accurately output a a learning roadmap in phases by order for the user he can do in json format. 
+You should only output the JSON, nothing more. You shoud use your knowledge and filling the json accurately based on the information provided. 
+Also note that the title in the JSON will be used for searching courses on youtube so that the user get revelant videos, so much sure to provide a meanful title. The learning roadmap should only contain learning phrases and not anything outside that.
+Your response should mostly be based on the "careerPath" from the above json data output, to know what job the user is trying to get. use the rest of the data as supporting information
+
 An example is shown:
 {
  "learningroadmap": [
@@ -78,6 +82,7 @@ An example is shown:
 
 const promptString2 = `
 based on the about information above i want use to accurately output a a learning roadmap in phases by order for the user he can do in json format. The learning roadmap should contain courses available that user can follow online on platform such as coursera, udemy... You should only output the JSON, nothing more. You shoud use your knowledge and filling the json accurately based on the information provided. The learning roadmap should only contain learning phrases and not anything outside that.
+Your response should mostly be based on the "careerPath" from the above json data output, to know what job the user is trying to get. use the rest of the data as supporting information
 An example is shown:
 {
   "learningroadmap": [
@@ -222,12 +227,28 @@ const HomePage = () => {
         console.log("Error getting document: " + error);
       });
   };
-
+  const convertObjectToString = (data) => {
+    if (!data) return 'null';
+    return Object.entries(data)
+      .map(([key, value]) => {
+        if (value === null || value === undefined) {
+          return `"${key}": null`;
+        }
+        if (Array.isArray(value)) {
+          return `"${key}": [${value.map((item) => JSON.stringify(item)).join(', ')}]`;
+        }
+        return `"${key}": ${JSON.stringify(value)}`;
+      })
+      .join(', ');
+  };
+  
   useEffect(() => {
-    setUserDataString(JSON.stringify(userData));
-    /*  if (userDataString !== "null") {
-      setUserDataCleanString(userDataString.replace(/["{}[\]:, ]/g, ""));
-    } */
+    console.log( convertObjectToString(userData));
+    
+     if (userDataString !== "null") {
+        runAPICall2(convertObjectToString(userData));
+        runAPICall(convertObjectToString(userData));
+    } 
   }, [userData]);
 
   useEffect(() => {
@@ -240,7 +261,7 @@ const HomePage = () => {
 
   const runAPICall = async (userInput) => {
     let content = userInput + promptString;
-
+console.log("content:" + content )
     const response = await palm.getResponse(content);
 
     const jsonData = JSON.parse(formatJSONString(response));
@@ -257,20 +278,7 @@ const HomePage = () => {
     console.log(jsonData);
   };
 
-  const retrieveFromDB = () => {
-    //retrieve appropriate data from db and return
-    return userDataString;
-  };
-
-  useEffect(() => {
-    const storedValue = retrieveFromDB();
-    runAPICall(storedValue);
-  }, []);
-
-  useEffect(() => {
-    const storedValue = retrieveFromDB();
-    runAPICall2(storedValue);
-  }, []);
+ 
   useEffect(() => {
     const documentStyle = getComputedStyle(document.documentElement);
     const data = {
