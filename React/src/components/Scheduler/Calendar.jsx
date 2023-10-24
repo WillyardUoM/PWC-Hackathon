@@ -51,7 +51,7 @@ export default class Calendar extends Component {
     this.initSchedulerEvents();
 
     const {events} = this.props;
-    scheduler.init(this.schedulerContainer, new Date(2023, 10, 20));
+    scheduler.init(this.schedulerContainer, new Date(2023, 10, 25));
     scheduler.clearAll();
     scheduler.parse(events);
   }
