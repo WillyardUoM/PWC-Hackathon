@@ -1,5 +1,5 @@
-
-import { HashRouter, Route, Routes } from 'react-router-dom';
+/* eslint-disable no-unused-vars */
+import { HashRouter, Route, Routes } from "react-router-dom";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primeicons/primeicons.css";
 import Education from "./newcomers/education";
@@ -10,17 +10,17 @@ import Academy from "./Academy/Academy";
 import React, { useState } from "react";
 import HomePage from "./Dashboard/pages/Homepage/HomePage";
 import { darkTheme, lightTheme } from "./Dashboard/styles/theme";
-import './Dashboard/styles/globalStyles'
-import './Dashboard/styleOver.css'
+import "./Dashboard/styles/globalStyles";
+import "./Dashboard/styleOver.css";
 import Register from "./newcomers/register";
 import Proceed from "./newcomers/proceed";
 import UploadResume from "./newcomers/upload_resume";
 import SkillsAssessment from "./newcomers/skills";
 import Others from "./newcomers/other";
 import Login from "./newcomers/login";
-import Profile from './Dashboard/pages/profile';
-import Chatbox from './Dashboard/pages/Chatbot/chatbot';
-import statusQw from './Dashboard/pages/Homepage/progress';
+import Profile from "./Dashboard/pages/profile";
+import Chatbox from "./Dashboard/pages/Chatbot/chatbot";
+import Logout from "./FirebaseComponent/Logout";
 export const ThemeContext = React.createContext(null);
 
 function App() {
@@ -29,33 +29,30 @@ function App() {
   return (
     <>
       <HashRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/Register" element={<Register />} />
+          <Route exact path="/Proceed" element={<Proceed />} />
+          <Route path="/Upload_Resume" element={<UploadResume />} />
+          <Route exact path="/Education" element={<Education />} />
+          <Route exact path="/Experience" element={<Experience />} />
+          <Route exact path="/Career_Goals" element={<CareerGoal />} />
+          <Route
+            exact
+            path="/Skill_Assessment"
+            element={<SkillsAssessment />}
+          />
+          <Route exact path="/Others" element={<Others />} />
+          <Route exact path="/LinkedinUrl" element={<LinkedInURL />} />
+        </Routes>
 
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/Register" element={<Register />} />
-              <Route exact path="/Proceed" element={<Proceed />} />
-              <Route path="/Upload_Resume" element={<UploadResume />} />
-              <Route exact path="/Education" element={<Education />} />
-              <Route exact path="/Experience" element={<Experience />} />
-              <Route exact path="/Career_Goals" element={<CareerGoal />} />
-              <Route exact path="/Skill_Assessment" element={<SkillsAssessment />} />
-              <Route exact path="/Others" element={<Others />} />
-              <Route exact path="/LinkedinUrl" element={<LinkedInURL />} />
-            </Routes>
-
-
-
-            <Routes>
-              <Route path="/Dashboard" element={<HomePage />} />
-              <Route path="/Academy" element={<Academy />} />
-              <Route path="/Profile" element={<Profile />} />
-              <Route path="/Chatbox" element={<Chatbox />} />
-              <Route path="/calendar" element={statusQw} />
-
-
-
-            </Routes>
-
+        <Routes>
+          <Route path="/Dashboard" element={<HomePage />} />
+          <Route path="/Academy" element={<Academy />} />
+          <Route path="/Profile" element={<Profile />} />
+          <Route path="/Chatbox" element={<Chatbox />} />
+          <Route path="/Logout" element={<Logout />} />
+        </Routes>
       </HashRouter>
     </>
   );
