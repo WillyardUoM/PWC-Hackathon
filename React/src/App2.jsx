@@ -74,7 +74,7 @@ function CalendarApp() {
         text: event.text,
     }));
     return (
-        <div className="main">
+        <div className="mainCalendar">
             <div className='calendarDiv'>
                 <div className="tool-bar">
                     <Toolbar
@@ -89,7 +89,7 @@ function CalendarApp() {
                         onDataUpdated={logDataUpdate}
                     />
                 </div>
-                <DataTable value={dataTableData} style={{ width: '50rem' }}>
+                <DataTable value={dataTableData} style={{ width: '50rem', marginTop: '20px'}}>
                 <Column field="id" header="ID" />
                 <Column field="start_date" header="Start Date" />
                 <Column field="end_date" header="End Date" />
