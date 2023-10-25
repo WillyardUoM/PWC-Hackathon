@@ -46,11 +46,18 @@
   margin-bottom: 40px;
   margin-left: 60px;
   margin-right: 60px;
-  width: 100%;
   padding: 20px;
   /* margin-left: 60px;
   margin-right: 50px; */
   /* height: 100%; */
   background-color: #ffffff;
   border-radius: 10px;
+}
+
+.mainCalendar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #F4F5F8;
+  overflow-y: scroll;
 }
