@@ -6,13 +6,11 @@ function Logout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Use an effect to handle the sign-out process when the component mounts.
     const handleLogout = async () => {
       try {
         await auth.signOut();
         navigate("/");
       } catch (error) {
-        // Handle any errors here, e.g., display an error message.
         console.error("Error during sign-out:", error);
       }
     };
@@ -20,7 +18,7 @@ function Logout() {
     handleLogout();
   }, [navigate]);
 
-  // You can return null or a loading message here.
+  // Return null or a loading message here.
   return (
     <>
       <h2>Loading...</h2>

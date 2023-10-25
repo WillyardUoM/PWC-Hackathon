@@ -30,6 +30,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [ageError, setAgeError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -83,8 +84,10 @@ function Register() {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          alert(errorCode + " " + errorMessage);
-          // ..
+          setErrorMessage(errorCode);
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 3000);
         });
     }
   };
@@ -260,6 +263,16 @@ function Register() {
                   <i className="fa-regular fa-eye"></i>
                 </label>
               </div>
+              <p
+                className="error-message"
+                style={{
+                  color: "red",
+                  margin: "0px 0px 10px 5px",
+                  fontSize: "15px",
+                }}
+              >
+                {errorMessage}
+              </p>
               <button
                 style={{
                   backgroundColor: "#1E1E1E",

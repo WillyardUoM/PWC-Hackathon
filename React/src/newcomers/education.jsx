@@ -253,7 +253,7 @@ function Education() {
 
             <div className={prodStyles.BackNextBtn}>
               <button style={{ border: "2px solid lightgray" }}>
-                <Link to="/upload_resume" style={{ textDecoration: "none" }}>
+                <Link to="/Proceed" style={{ textDecoration: "none" }}>
                   Go Back
                 </Link>
               </button>

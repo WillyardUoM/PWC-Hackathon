@@ -10,7 +10,7 @@ function Proceed() {
   const navigate = useNavigate();
 
   function goTo() {
-    navigate("/Upload_resume");
+    navigate("/education");
   }
 
   return (
