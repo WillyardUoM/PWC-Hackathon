@@ -100,6 +100,14 @@ function Register() {
         gender: selectedGender,
         country: selectedCountry,
         age: parseInt(age),
+        educations: [],
+        experiences: [],
+        skills: [],
+        projects: [],
+        interests: [],
+        currentPosition: "",
+        careerAspiration: "",
+        courses: [],
       });
     } catch (e) {
       alert("Error adding document: " + e);

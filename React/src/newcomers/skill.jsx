@@ -35,7 +35,7 @@ function Skill() {
     const docRef = doc(usersCollection, documentId);
 
     updateDoc(docRef, {
-      skill: skillArray,
+      skills: skillArray,
     })
       .then(() => {
         navigate("/Project_Completed");

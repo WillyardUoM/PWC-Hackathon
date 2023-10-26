@@ -185,7 +185,7 @@ const HomePage = () => {
           setUserData({
             careerAspiration: data.careerAspiration,
             courseArray: data.courses
-              ? data.careerGoals.map((course) => ({
+              ? data.courses.map((course) => ({
                   courseName: course.courseName,
                 }))
               : null,
@@ -208,12 +208,12 @@ const HomePage = () => {
                 }))
               : null,
             interestArray: data.interests
-              ? data.careerGoals.map((interest) => ({
+              ? data.interests.map((interest) => ({
                   interestName: interest.interestName,
                 }))
               : null,
-            projectArray: data.projectArray
-              ? data.careerGoals.map((project) => ({
+            projectArray: data.projects
+              ? data.projects.map((project) => ({
                   projectName: project.projectName,
                 }))
               : null,
