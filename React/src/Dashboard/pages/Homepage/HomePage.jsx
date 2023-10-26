@@ -173,7 +173,6 @@ const HomePage = () => {
     return () => unsubscribe();
   }, []);
 
-  // Function to fetch user data and update userData state
   const getDocumentData = (documentId) => {
     const usersCollection = collection(db, "Accounts");
     const docRef = doc(usersCollection, documentId);
