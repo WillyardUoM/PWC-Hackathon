@@ -29,44 +29,49 @@ function CalendarApp() {
         addMessage(message);
     }
 
-    const courses = [
-        {
-            name: 'Course A',
-            timePerDay: 2, // Amount of hours allocated per day for Course A
-            totalDuration: 10, // Total duration of Course A in days
-        },
-        {
-            name: 'Course B',
-            timePerDay: 3, // Amount of hours allocated per day for Course B
-            totalDuration: 20, // Total duration of Course B in days
-        },
+    // const courses = [
+    //     {
+    //         name: 'Course A',
+    //         timePerDay: 2, // Amount of hours allocated per day for Course A
+    //         totalDuration: 10, // Total duration of Course A in days
+    //     },
+    //     {
+    //         name: 'Course B',
+    //         timePerDay: 3, // Amount of hours allocated per day for Course B
+    //         totalDuration: 20, // Total duration of Course B in days
+    //     },
+    // ];
+
+    // const data = [];
+    // let currentDate = new Date();
+    // let i = 1;
+
+    // for (const course of courses) {
+    //     for (let countDuration = course.timePerDay; countDuration <= course.totalDuration;) {
+    //         const startDate = new Date(currentDate);
+    //         startDate.setHours(6, 0, 0, 0); // Set the start time to 06:00
+
+    //         const endDate = new Date(startDate);
+    //         endDate.setHours(startDate.getHours() + course.timePerDay);
+
+    //         data.push({
+    //             start_date: startDate.toISOString().slice(0, 19).replace('T', ' '), // Format as '2023-11-20 6:00'
+    //             end_date: endDate.toISOString().slice(0, 19).replace('T', ' '), // Format as '2023-11-20 8:00'
+    //             text: course.name,
+    //             id: i,
+    //         });
+
+    //         currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+
+    //         i++;
+    //         countDuration += course.timePerDay;
+    //     }
+    // }
+
+    const data = [
+        { start_date: '2023-10-25 6:00', end_date: '2023-10-25 8:00', text: 'Course', id: 1}
     ];
 
-    const data = [];
-    let currentDate = new Date();
-    let i = 1;
-
-    for (const course of courses) {
-        for (let countDuration = course.timePerDay; countDuration <= course.totalDuration;) {
-            const startDate = new Date(currentDate);
-            startDate.setHours(6, 0, 0, 0); // Set the start time to 06:00
-
-            const endDate = new Date(startDate);
-            endDate.setHours(startDate.getHours() + course.timePerDay);
-
-            data.push({
-                start_date: startDate.toISOString().slice(0, 19).replace('T', ' '), // Format as '2023-11-20 6:00'
-                end_date: endDate.toISOString().slice(0, 19).replace('T', ' '), // Format as '2023-11-20 8:00'
-                text: course.name,
-                id: i,
-            });
-
-            currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
-
-            i++;
-            countDuration += course.timePerDay;
-        }
-    }
     const dataTableData = data.map((event) => ({
         id: event.id,
         start_date: event.start_date,
