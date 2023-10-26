@@ -79,7 +79,7 @@ function Login() {
                       type="email"
                       name="email"
                       id="email"
-                      placeholder="Enter your name"
+                      placeholder="Enter your email"
                       required
                       value={email}
                       onChange={handleEmailChange}
