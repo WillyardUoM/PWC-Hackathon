@@ -1,18 +1,11 @@
-/* eslint-disable no-unused-vars */
 import styles from "./newcomers.module.css";
 import prodStyles from "./proceed.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import "./primereactMod.css";
 import SlideShow from "./slideshow";
 
 function Proceed() {
-  const navigate = useNavigate();
-
-  function goTo() {
-    navigate("/education");
-  }
-
   return (
     <>
       <div className={styles.main}>
@@ -21,8 +14,8 @@ function Proceed() {
           <div className={prodStyles.proceed}>
             <h1>How would you like to proceed</h1>
             <div className={prodStyles.progressBar}>
-              <span style={{ color: "gray" }}>10% Completed</span>
-              <ProgressBar style={{ height: "15px" }} value={10}></ProgressBar>
+              <span style={{ color: "gray" }}>20% Completed</span>
+              <ProgressBar style={{ height: "15px" }} value={20}></ProgressBar>
             </div>
             <div className={prodStyles.methods}>
               <div>
@@ -47,13 +40,6 @@ function Proceed() {
                 </Link>
               </div>
             </div>
-            <button
-              style={{ margin: "0" }}
-              className={prodStyles.nextBtn}
-              onClick={goTo}
-            >
-              Next
-            </button>
           </div>
         </div>
         <div className={styles.right_side}>

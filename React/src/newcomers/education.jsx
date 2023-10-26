@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import styles from "./newcomers.module.css";
 import prodStyles from "./proceed.module.css";
@@ -16,6 +14,7 @@ import { collection, doc, updateDoc } from "firebase/firestore";
 function Education() {
   const navigate = useNavigate();
   //db
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useState(null);
   const [documentId, setDocumentId] = useState(null);
 
@@ -40,15 +39,13 @@ function Education() {
       educations: educationArray,
     })
       .then(() => {
-        console.log("Education data saved to Firestore!");
         navigate("/Experience");
       })
       .catch((error) => {
-        console.error("Error saving education data:", error);
+        console.error("Error: ", error);
       });
   }
 
-  //const [selectedDegree, setSelectedDegree] = useState("");
   const [educationArray, setEducationArray] = useState([
     {
       id: 1,
@@ -69,7 +66,6 @@ function Education() {
 
   useEffect(() => {
     if (educationArray.length === 0) {
-      // Initialize with one form if the array is empty
       setEducationArray([
         {
           id: 1,
@@ -131,9 +127,9 @@ function Education() {
             </p>
             <div className={prodStyles.progressBar}>
               <span style={{ color: "gray", fontSize: "14px" }}>
-                80% Completed
+                30% Completed
               </span>
-              <ProgressBar style={{ height: "15px" }} value={80} />
+              <ProgressBar style={{ height: "15px" }} value={30} />
             </div>
 
             <div id="education" className={prodStyles.eduList}>
@@ -145,16 +141,15 @@ function Education() {
                   <div className={prodStyles.fields}>
                     <div>
                       <span style={{ marginLeft: "10px" }}>
-                        School or University{" "}
-                        <span style={{ color: "#f85500" }}>*</span>
+                        University <span style={{ color: "#f85500" }}>*</span>
                       </span>
-                      <label htmlFor="school">
+                      <label htmlFor="university">
                         <input
                           type="text"
-                          name="school"
-                          id="school"
-                          placeholder="Enter your school name"
-                          value={education.school}
+                          name="university"
+                          id="university"
+                          placeholder="Enter your university name"
+                          value={education.university}
                           onChange={(e) =>
                             handleInputChange(
                               education.id,

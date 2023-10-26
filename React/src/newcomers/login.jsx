@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from "react";
 import styles from "./newcomers.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import SlideShow from "./slideshow";
-
 //firebase
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../FirebaseComponent/Firebase";
@@ -39,21 +37,25 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform login using Firebase Authentication
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        // eslint-disable-next-line no-unused-vars
         const user = userCredential.user;
-        //alert("User with email " + user.email + " has logged in successfully");
         navigate("/Dashboard");
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
+        // const errorMessage = error.message;
         setErrorMessage(errorCode);
         setTimeout(() => {
           setErrorMessage("");
         }, 3000);
       });
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -67,11 +69,6 @@ function Login() {
             <div className={styles.login}>
               <h1>Login your account</h1>
               <span>Let's get you back on track</span>
-              <button className={styles.googleBtn}>
-                <img src="images/google.png" height={"25"} alt="" />
-                Login with Google
-              </button>
-              <span>or</span>
               <form onSubmit={handleSubmit}>
                 <div>
                   <span style={{ marginLeft: "10px" }}>
@@ -95,7 +92,7 @@ function Login() {
                   </span>
                   <label htmlFor="password">
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       name="password"
                       id="password"
                       placeholder="Enter your password"
@@ -103,7 +100,14 @@ function Login() {
                       value={password}
                       onChange={handlePasswordChange}
                     />
-                    <i className="fa-regular fa-eye"></i>
+                    <i
+                      className={
+                        showPassword
+                          ? "fa-regular fa-eye-slash"
+                          : "fa-regular fa-eye"
+                      }
+                      onClick={togglePasswordVisibility}
+                    ></i>
                   </label>
                 </div>
                 <p
