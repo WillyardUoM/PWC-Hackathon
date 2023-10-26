@@ -1,21 +1,19 @@
-/* eslint-disable no-unused-vars */
 import styles from "./newcomers.module.css";
 import prodStyles from "./proceed.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
-import { Slider } from "primereact/slider";
 import { useEffect, useState } from "react";
 import "./primereactMod.css";
-import Skill_slider from "./skill_slider";
 import SlideShow from "./slideshow";
 //firebase
 import { auth } from "../FirebaseComponent/Firebase";
 import { db } from "../FirebaseComponent/Firebase";
 import { collection, doc, updateDoc } from "firebase/firestore";
 
-function SkillsAssessment() {
+function CourseCompleted() {
   const navigate = useNavigate();
   //db
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useState(null);
   const [documentId, setDocumentId] = useState(null);
 
@@ -37,70 +35,63 @@ function SkillsAssessment() {
     const docRef = doc(usersCollection, documentId);
 
     updateDoc(docRef, {
-      skills: skillArray,
+      courses: courseArray,
     })
       .then(() => {
-        console.log("Education data saved to Firestore!");
-        navigate("/Career_Goals");
+        navigate("/Dashboard");
       })
       .catch((error) => {
-        console.error("Error saving education data:", error);
+        console.error("Error: ", error);
       });
   }
 
-  const [skillArray, setSkillArray] = useState([
+  const [courseArray, setCourseArray] = useState([
     {
       id: 1,
-      skillName: "",
-      rate: 0,
+      courseName: "",
     },
   ]);
 
-  const [range, setRange] = useState(0);
   const [count, setCount] = useState(2);
-  const [skillCode, setSkillCode] = useState([]);
 
   useEffect(() => {
-    if (skillArray.length === 0) {
-      // Initialize with one form if the array is empty
-      setSkillArray([
+    if (courseArray.length === 0) {
+      setCourseArray([
         {
           id: 1,
-          skillName: "",
-          rate: 0,
+          courseName: "",
         },
       ]);
     }
-  }, [skillArray]);
+  }, [courseArray]);
 
-  const addSkill = () => {
-    const newSkill = {
+  const addCourse = () => {
+    const newCourse = {
       id: count,
-      skillName: "",
-      rate: "",
+      courseName: "",
     };
     setCount(count + 1);
-    setSkillArray([...skillArray, newSkill]);
+    setCourseArray([...courseArray, newCourse]);
   };
 
-  const deleteSkill = () => {
-    if (skillArray.length === 0) {
+  const deleteCourse = () => {
+    if (courseArray.length === 0) {
       return;
     }
     setCount(count - 1);
-    const updatedSkillArray = [...skillArray];
-    updatedSkillArray.pop();
-    setSkillArray(updatedSkillArray);
+    const updatedCourserray = [...courseArray];
+    updatedCourserray.pop();
+    setCourseArray(updatedCourserray);
   };
 
   const handleInputChange = (id, field, value) => {
-    const updatedSkillArray = skillArray.map((skill) => {
-      if (skill.id === id) {
-        return { ...skill, [field]: value };
+    const updatedCourserray = courseArray.map((course) => {
+      if (course.id === id) {
+        return { ...course, [field]: value };
       }
-      return skill;
+      return course;
     });
-    setSkillArray(updatedSkillArray);
+    setCourseArray(updatedCourserray);
   };
 
   return (
@@ -109,7 +100,7 @@ function SkillsAssessment() {
         <div className={styles.left_side}>
           <img className={styles.logo} src="images/pwc-logo.png" alt="" />
           <div className={prodStyles.proceed}>
-            <h1>Skill Assessment</h1>
+            <h1>Courses Completed</h1>
             <p
               style={{ color: "gray", margin: "0px 0 20px", fontSize: "14px" }}
             >
@@ -118,52 +109,42 @@ function SkillsAssessment() {
             </p>
             <div className={prodStyles.progressBar}>
               <span style={{ color: "gray", fontSize: "14px" }}>
-                80% Completed
+                90% Completed
               </span>
-              <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
+              <ProgressBar style={{ height: "15px" }} value={90}></ProgressBar>
             </div>
 
-            <div id="skills" className={prodStyles.eduList}>
-              {skillArray.map((skill) => (
+            <div id="courses" className={prodStyles.eduList}>
+              {courseArray.map((course) => (
                 <div
                   className="item"
-                  key={skill.id}
+                  key={course.id}
                   style={{ marginBottom: "20px" }}
                 >
                   <div className={prodStyles.eduHead}>
-                    <h4>Skill {skill.id}</h4>
+                    <h4>Course {course.id}</h4>
                   </div>
                   <div className={prodStyles.fields}>
                     <div>
                       <span style={{ marginLeft: "10px" }}>
-                        Skill name <span style={{ color: "#f85500" }}>*</span>
+                        Course Name <span style={{ color: "#f85500" }}>*</span>
                       </span>
-                      <label htmlFor="skill">
+                      <label htmlFor="course">
                         <input
                           type="text"
-                          name="skill"
-                          id="skill"
-                          placeholder="Enter the skill name"
+                          name="course"
+                          id="course"
+                          placeholder="Enter course name"
                           required
                           onChange={(e) =>
                             handleInputChange(
-                              skill.id,
-                              "skillName",
+                              course.id,
+                              "courseName",
                               e.target.value
                             )
                           }
                         />
                       </label>
-                    </div>
-                    <div style={{ flex: "100%" }}>
-                      <span>
-                        <b>Rate your Skill</b>
-                      </span>
-                      <Skill_slider
-                        onChange={(value) =>
-                          handleInputChange(skill.id, "rate", value)
-                        }
-                      />
                     </div>
                   </div>
                 </div>
@@ -172,19 +153,19 @@ function SkillsAssessment() {
 
             <div className={prodStyles.BackNextBtn}>
               <button style={{ border: "2px solid lightgray" }}>
-                <Link to="/experience" style={{ textDecoration: "none" }}>
+                <Link to="/Career_Path" style={{ textDecoration: "none" }}>
                   Go Back
                 </Link>
               </button>
               <button
-                onClick={deleteSkill}
+                onClick={deleteCourse}
                 style={{ color: "#F85500", border: "2px solid #F85500" }}
               >
-                Delete Skill
+                Delete Course
               </button>
-              <button onClick={addSkill}>Add Another</button>
+              <button onClick={addCourse}>Add Another</button>
               <button
-                form="skills"
+                form="courses"
                 type="submit"
                 style={{
                   color: "white",
@@ -206,4 +187,4 @@ function SkillsAssessment() {
   );
 }
 
-export default SkillsAssessment;
+export default CourseCompleted;
