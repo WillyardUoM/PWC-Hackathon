@@ -23,6 +23,7 @@ import CareerPath from "./newcomers/career_path";
 import ProjectCompleted from "./newcomers/project_completed";
 import CourseCompleted from "./newcomers/course_completed";
 import Skill from "./newcomers/skill";
+import Loading from "./Loader/logos";
 export const ThemeContext = React.createContext(null);
 
 function App() {
@@ -33,7 +34,8 @@ function App() {
     <>
       <HashRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Loading />} />
+          <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
           <Route exact path="/Proceed" element={<Proceed />} />
           <Route exact path="/LinkedinUrl" element={<LinkedInURL />} />

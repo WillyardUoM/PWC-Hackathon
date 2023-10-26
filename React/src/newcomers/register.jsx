@@ -287,7 +287,10 @@ function Register() {
             </form>
             <p style={{ fontSize: "14px" }}>
               Already have an account?{" "}
-              <Link to="/" style={{ color: "#F85500", textDecoration: "none" }}>
+              <Link
+                to="/Login"
+                style={{ color: "#F85500", textDecoration: "none" }}
+              >
                 Log In
               </Link>
             </p>
