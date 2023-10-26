@@ -82,7 +82,7 @@ const linksArray = [
   {
     label: "Home",
     icon: <AiOutlineHome />,
-    to: "/",
+    to: "/Dashboard",
   },
   {
     label: "Training Plan",
