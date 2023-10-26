@@ -21,6 +21,7 @@ import DetailsCourse from "./coursesInfo";
 //firebase
 import { auth, db } from "../../../FirebaseComponent/Firebase";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 function formatJSONString(jsonString) {
   // Remove leading and trailing spaces if present
@@ -161,6 +162,7 @@ const HomePage = () => {
     freeLearningCourses: null,
   });
   const [documentId, setDocumentId] = useState(null);
+  const navigate = useNavigate();
 
   // eslint-disable-next-line no-unused-vars
   const [userDataString, setUserDataString] = useState("");
@@ -354,7 +356,7 @@ const HomePage = () => {
 
   const selectedCityName = selectedCity ? selectedCity.name : null;
 
-  return (
+  return user ? (
     <ThemeProvider theme={themeStyle}>
       <SLayout>
         <Sidebar />
@@ -509,6 +511,8 @@ const HomePage = () => {
         </div>
       </SLayout>
     </ThemeProvider>
+  ) : (
+    navigate("/")
   );
 };
 
