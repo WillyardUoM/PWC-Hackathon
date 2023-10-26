@@ -9,7 +9,7 @@ function Logout() {
     const handleLogout = async () => {
       try {
         await auth.signOut();
-        navigate("/");
+        navigate("/Login");
       } catch (error) {
         console.error("Error during sign-out:", error);
       }
@@ -18,12 +18,7 @@ function Logout() {
     handleLogout();
   }, [navigate]);
 
-  // Return null or a loading message here.
-  return (
-    <>
-      <h2>Loading...</h2>
-    </>
-  );
+  return <></>;
 }
 
 export default Logout;

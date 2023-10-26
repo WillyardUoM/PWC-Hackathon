@@ -39,9 +39,9 @@ function UploadResume() {
             </p>
             <div className={prodStyles.progressBar}>
               <span style={{ color: "gray", fontSize: "14px" }}>
-                80% Completed
+                90% Completed
               </span>
-              <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
+              <ProgressBar style={{ height: "15px" }} value={90}></ProgressBar>
             </div>
 
             <div style={{ width: "100%" }}>

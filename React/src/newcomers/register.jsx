@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 import styles from "./newcomers.module.css";
 import regStyle from "./register.module.css";
@@ -7,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
 import SlideShow from "./slideshow";
-
 //firebase
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../FirebaseComponent/Firebase";
@@ -67,7 +65,7 @@ function Register() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior.
+    e.preventDefault();
     if (age < 0) {
       setAgeError("Age cannot be negative");
     } else if (!isPasswordValid(password)) {
@@ -75,15 +73,14 @@ function Register() {
     } else {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Signed up
+          // eslint-disable-next-line no-unused-vars
           const user = userCredential.user;
           saveData();
-          //alert("User with email " + user.email + " has been signed up successfully");
           navigate("/Proceed");
         })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
+          //const errorMessage = error.message;
           setErrorMessage(errorCode);
           setTimeout(() => {
             setErrorMessage("");
@@ -94,10 +91,8 @@ function Register() {
 
   function saveData() {
     try {
-      // Create a new document in the "users" collection in Firestore
-      // You need to add the Firestore logic here using the 'db' object
       const usersCollection = collection(db, "Accounts");
-      const userData = doc(usersCollection, email); // Assuming email is the document ID.
+      const userData = doc(usersCollection, email);
 
       setDoc(userData, {
         fullName: fullname,
@@ -120,6 +115,11 @@ function Register() {
     setPasswordError("");
   }
 
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className={styles.main}>
       <div className={styles.left_side}>
@@ -128,11 +128,6 @@ function Register() {
           <div className={styles.login}>
             <h1>Create your account</h1>
             <span>Let's get started today for free</span>
-            <button className={styles.googleBtn}>
-              <img src="images/google.png" height={"25"} alt="" />
-              Login with Google
-            </button>
-            <span>or</span>
             <form className={regStyle.regForm} onSubmit={handleSubmit}>
               <div>
                 <span style={{ marginLeft: "10px" }}>
@@ -160,7 +155,7 @@ function Register() {
                     name="email"
                     required
                     id="email"
-                    placeholder="Enter your name"
+                    placeholder="Enter your email"
                     value={email}
                     onChange={handleEmailChange}
                   />
@@ -252,7 +247,7 @@ function Register() {
                 </p>
                 <label htmlFor="password">
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     required
                     id="password"
@@ -260,7 +255,14 @@ function Register() {
                     value={password}
                     onChange={handlePasswordChange}
                   />
-                  <i className="fa-regular fa-eye"></i>
+                  <i
+                    className={
+                      showPassword
+                        ? "fa-regular fa-eye-slash"
+                        : "fa-regular fa-eye"
+                    }
+                    onClick={togglePasswordVisibility}
+                  ></i>
                 </label>
               </div>
               <p
@@ -285,7 +287,10 @@ function Register() {
             </form>
             <p style={{ fontSize: "14px" }}>
               Already have an account?{" "}
-              <Link to="/" style={{ color: "#F85500", textDecoration: "none" }}>
+              <Link
+                to="/Login"
+                style={{ color: "#F85500", textDecoration: "none" }}
+              >
                 Log In
               </Link>
             </p>

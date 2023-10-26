@@ -5,7 +5,7 @@ import "../Style/App.css";
 import TaskList from "../TaskList";
 import Sts from "../Homepage/progress";
 import { Dialog } from "primereact/dialog";
-import { SLayout, SMain } from "../../components/Layout/styles";
+import { SLayout } from "../../components/Layout/styles";
 import { ThemeProvider } from "styled-components";
 import PalmAI from "../../../Api/palm";
 import { darkTheme, lightTheme } from "../../styles/theme";
@@ -18,7 +18,6 @@ import { Skeleton } from "primereact/skeleton";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import DetailsCourse from "./coursesInfo";
-
 //firebase
 import { auth, db } from "../../../FirebaseComponent/Firebase";
 import { collection, doc, getDoc } from "firebase/firestore";
@@ -144,17 +143,20 @@ const HomePage = () => {
   ];
 
   // db
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState({
-    careerGoalArray: null,
-    challenges: null,
-    comments: null,
+    careerAspiration: null,
+    courseArray: null,
+    currentPos: null,
     educationArray: null,
     experienceArray: null,
-    motivation: null,
+    interestArray: null,
+    projectArray: null,
     skillArray: null,
   });
 
+  // eslint-disable-next-line no-unused-vars
   const [userDataString, setUserDataString] = useState("");
 
   useEffect(() => {
@@ -181,19 +183,15 @@ const HomePage = () => {
         if (doc.exists) {
           const data = doc.data();
           setUserData({
-            careerGoalArray: data.careerGoals
-              ? data.careerGoals.map((goal) => ({
-                  careerPath: goal.careerPath,
-                  timeAllocate: goal.timeAllocate,
-                  expSalary: goal.expSalary,
-                  aspiration: goal.aspiration,
+            careerAspiration: data.careerAspiration,
+            courseArray: data.courses
+              ? data.careerGoals.map((course) => ({
+                  courseName: course.courseName,
                 }))
               : null,
-            challenges: data.challenges,
-            comments: data.comments,
+            currentPos: data.currentPosition,
             educationArray: data.educations
               ? data.educations.map((edu) => ({
-                  id: edu.id,
                   university: edu.university,
                   degree: edu.degree,
                   field: edu.field,
@@ -203,19 +201,26 @@ const HomePage = () => {
               : null,
             experienceArray: data.experiences
               ? data.experiences.map((experience) => ({
-                  id: experience.id,
                   jobTitle: experience.jobTitle,
                   company: experience.company,
                   exp: experience.exp,
                   isCurrent: experience.isCurrent,
                 }))
               : null,
-            motivation: data.motivation,
+            interestArray: data.interests
+              ? data.careerGoals.map((interest) => ({
+                  interestName: interest.interestName,
+                }))
+              : null,
+            projectArray: data.projectArray
+              ? data.careerGoals.map((project) => ({
+                  projectName: project.projectName,
+                }))
+              : null,
             skillArray: data.skills
               ? data.skills.map((skill) => ({
-                  id: skill.id,
-                  skillName: skill.skillName,
-                  rate: skill.rate,
+                  softSkill: skill.softSkill,
+                  techSkill: skill.techSkill,
                 }))
               : null,
           });
@@ -228,40 +233,45 @@ const HomePage = () => {
       });
   };
   const convertObjectToString = (data) => {
-    if (!data) return 'null';
+    if (!data) return "null";
     return Object.entries(data)
       .map(([key, value]) => {
         if (value === null || value === undefined) {
           return `"${key}": null`;
         }
         if (Array.isArray(value)) {
-          return `"${key}": [${value.map((item) => JSON.stringify(item)).join(', ')}]`;
+          return `"${key}": [${value
+            .map((item) => JSON.stringify(item))
+            .join(", ")}]`;
         }
         return `"${key}": ${JSON.stringify(value)}`;
       })
-      .join(', ');
+      .join(", ");
   };
-  
+
   useEffect(() => {
-    console.log( convertObjectToString(userData));
-    
-     if (userDataString !== "null") {
-        runAPICall2(convertObjectToString(userData));
-        runAPICall(convertObjectToString(userData));
-    } 
+    console.log(convertObjectToString(userData));
+
+    if (userDataString !== "null") {
+      runAPICall2(convertObjectToString(userData));
+      runAPICall(convertObjectToString(userData));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   useEffect(() => {
     // Reset selectedCity to the default value when the component mounts (page reload)
     setSelectedCity(cities[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // eslint-disable-next-line no-unused-vars
   const toast = useRef(null);
 
   const palm = new PalmAI();
 
   const runAPICall = async (userInput) => {
     let content = userInput + promptString;
-console.log("content:" + content )
+    console.log("content:" + content);
     const response = await palm.getResponse(content);
 
     const jsonData = JSON.parse(formatJSONString(response));
@@ -278,7 +288,6 @@ console.log("content:" + content )
     console.log(jsonData);
   };
 
- 
   useEffect(() => {
     const documentStyle = getComputedStyle(document.documentElement);
     const data = {

@@ -1,16 +1,16 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
-import { Dropdown } from "primereact/dropdown";
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../FirebaseComponent/Firebase";
 import prodStyles from "./proceed.module.css";
 import styles from "./newcomers.module.css";
 import SlideShow from "./slideshow";
+
 function Experience() {
   const navigate = useNavigate();
   //db
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useState(null);
   const [documentId, setDocumentId] = useState(null);
 
@@ -35,11 +35,10 @@ function Experience() {
       experiences: experienceArray,
     })
       .then(() => {
-        console.log("Experience data saved to Firestore!");
-        navigate("/Skill_Assessment");
+        navigate("/Skill");
       })
       .catch((error) => {
-        console.error("Error saving experience data:", error);
+        console.error("Error: ", error);
       });
   }
 
@@ -57,7 +56,6 @@ function Experience() {
 
   useEffect(() => {
     if (experienceArray.length === 0) {
-      // Initialize with one form if the array is empty
       setExperienceArray([
         {
           id: 1,
@@ -83,7 +81,7 @@ function Experience() {
     setExperienceArray([...experienceArray, newExp]);
   };
 
-  const deleteWorkExperience = () => {
+  const deleteWorkExp = () => {
     if (experienceArray.length === 0) {
       return;
     }
@@ -118,9 +116,9 @@ function Experience() {
             </p>
             <div className={prodStyles.progressBar}>
               <span style={{ color: "gray", fontSize: "14px" }}>
-                80% Completed
+                40% Completed
               </span>
-              <ProgressBar style={{ height: "15px" }} value={80}></ProgressBar>
+              <ProgressBar style={{ height: "15px" }} value={40}></ProgressBar>
             </div>
 
             <div id="experience" className={prodStyles.eduList}>
@@ -220,12 +218,12 @@ function Experience() {
 
             <div className={prodStyles.BackNextBtn}>
               <button style={{ border: "2px solid lightgray" }}>
-                <Link to="/education" style={{ textDecoration: "none" }}>
+                <Link to="/Education" style={{ textDecoration: "none" }}>
                   Go Back
                 </Link>
               </button>
               <button
-                onClick={deleteWorkExperience}
+                onClick={deleteWorkExp}
                 style={{ color: "#F85500", border: "2px solid #F85500" }}
               >
                 Delete Work EXP

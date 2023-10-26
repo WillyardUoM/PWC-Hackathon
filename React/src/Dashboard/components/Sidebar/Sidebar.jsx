@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { useContext, useRef, useState } from "react";
+import { useState } from "react";
 import {
   SDivider,
   SLink,
@@ -14,16 +13,13 @@ import {
 import {
   AiOutlineHome,
   AiOutlineCalendar,
-  AiOutlineFieldTime,
   AiOutlineLeft,
   AiOutlineSetting,
   AiOutlineRobot,
 } from "react-icons/ai";
 
 import { MdOutlineSchool } from "react-icons/md";
-import { MdLogout, MdOutlineAnalytics } from "react-icons/md";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { Toast } from "primereact/toast";
+import { MdLogout } from "react-icons/md";
 
 import { useLocation } from "react-router-dom";
 
@@ -91,7 +87,7 @@ const linksArray = [
   {
     label: "Training Plan",
     icon: <AiOutlineCalendar />,
-    to: "/calendar",
+    to: "/Calendar",
   },
 ];
 const thirdLinksArray = [
