@@ -20,7 +20,7 @@ import { DataTable } from "primereact/datatable";
 import DetailsCourse from "./coursesInfo";
 //firebase
 import { auth, db } from "../../../FirebaseComponent/Firebase";
-import { collection, doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 
 function formatJSONString(jsonString) {
   // Remove leading and trailing spaces if present
@@ -130,6 +130,7 @@ An example is shown:
 const HomePage = () => {
   const [apiResponse, setApiResponse] = useState([]);
   const [apiResponse2, setApiResponse2] = useState([]);
+  const [apiResponseDB, setApiResponseDB] = useState([]);
 
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
@@ -154,7 +155,12 @@ const HomePage = () => {
     interestArray: null,
     projectArray: null,
     skillArray: null,
+    freeLearningCourses: null,
   });
+  const [APIData, setAPIData] = useState({
+    freeLearningCourses: null,
+  });
+  const [documentId, setDocumentId] = useState(null);
 
   // eslint-disable-next-line no-unused-vars
   const [userDataString, setUserDataString] = useState("");
@@ -163,7 +169,7 @@ const HomePage = () => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
-        const documentId = user.email;
+        setDocumentId(user.email);
         getDocumentData(documentId);
       } else {
         setUser(null);
@@ -171,7 +177,7 @@ const HomePage = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [documentId]);
 
   const getDocumentData = (documentId) => {
     const usersCollection = collection(db, "Accounts");
@@ -220,6 +226,11 @@ const HomePage = () => {
                 }))
               : null,
           });
+          setAPIData({
+            freeLearningCourses: data.freeLearningCourses
+              ? data.freeLearningCourses
+              : null,
+          });
         } else {
           console.log("No such document!");
         }
@@ -228,6 +239,21 @@ const HomePage = () => {
         console.log("Error getting document: " + error);
       });
   };
+
+  function saveAPI2Response(jsonData) {
+    try {
+      const usersCollection = collection(db, "Accounts");
+      const userData = doc(usersCollection, documentId);
+
+      updateDoc(userData, {
+        freeLearningCourses: jsonData,
+      });
+      console.log("Saved in Free Learning");
+    } catch (e) {
+      console.log("Error adding document: " + e);
+    }
+  }
+
   const convertObjectToString = (data) => {
     if (!data) return "null";
     return Object.entries(data)
@@ -249,7 +275,13 @@ const HomePage = () => {
     console.log(convertObjectToString(userData));
 
     if (userDataString !== "null") {
-      runAPICall2(convertObjectToString(userData));
+      if (APIData.freeLearningCourses === null) {
+        console.log("Running API");
+        runAPICall2(convertObjectToString(userData));
+      } else {
+        console.log(APIData);
+        setApiResponseDB(APIData.freeLearningCourses);
+      }
       runAPICall(convertObjectToString(userData));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -274,6 +306,7 @@ const HomePage = () => {
     setApiResponse(jsonData);
     localStorage.setItem("playlist", `${formatJSONString(response)}`);
   };
+
   const runAPICall2 = async (userInput) => {
     let content = userInput + promptString2;
 
@@ -282,6 +315,7 @@ const HomePage = () => {
     const jsonData = JSON.parse(formatJSONString(response));
     setApiResponse2(jsonData);
     console.log(jsonData);
+    saveAPI2Response(jsonData);
   };
 
   useEffect(() => {
@@ -432,8 +466,11 @@ const HomePage = () => {
                   </div>
                 ) : (
                   <div className="">
-                    {apiResponse2?.learningroadmap &&
-                    apiResponse2.learningroadmap.length > 0 ? (
+                    {apiResponseDB?.learningroadmap &&
+                    apiResponseDB.learningroadmap.length > 0 ? (
+                      <DetailsCourse apiResponse2={apiResponseDB} />
+                    ) : apiResponse2?.learningroadmap &&
+                      apiResponse2.learningroadmap.length > 0 ? (
                       <DetailsCourse apiResponse2={apiResponse2} />
                     ) : (
                       <div className="empty">

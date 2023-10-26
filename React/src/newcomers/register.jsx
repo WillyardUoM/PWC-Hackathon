@@ -68,6 +68,8 @@ function Register() {
     e.preventDefault();
     if (age < 0) {
       setAgeError("Age cannot be negative");
+    } else if (age == 0) {
+      setAgeError("Age cannot be zero");
     } else if (!isPasswordValid(password)) {
       setPasswordError("Use a strong password");
     } else {
@@ -108,9 +110,10 @@ function Register() {
         currentPosition: "",
         careerAspiration: "",
         courses: [],
+        freeLearningCourses: [],
       });
     } catch (e) {
-      alert("Error adding document: " + e);
+      console.log("Error adding document: " + e);
     }
 
     setFullName("");
