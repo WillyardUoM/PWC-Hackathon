@@ -39,8 +39,8 @@ const promptString = `
 keep progress 0
 based on the about information above i want use to accurately output a a learning roadmap in phases by order for the user he can do in json format. 
 You should only output the JSON, nothing more. You shoud use your knowledge and filling the json accurately based on the information provided. 
-Also note that the title in the JSON will be used for searching courses on youtube so that the user get revelant videos, so much sure to provide a meanful title. The learning roadmap should only contain learning phrases and not anything outside that.
-Your response should mostly be based on the "careerPath" from the above json data output, to know what job the user is trying to get. use the rest of the data as supporting information
+Also note that the title in the JSON will be used for searching courses on youtube so that the user get revelant videos, so make sure to provide a meanful title. The learning roadmap should only contain learning phrases and not anything outside that.
+Your response should mostly be based on the "careerAspiration" from the above json data output, to know what job the user is trying to get. use the rest of the data as supporting information
 
 An example is shown:
 {
@@ -194,17 +194,14 @@ const HomePage = () => {
               ? data.educations.map((edu) => ({
                   university: edu.university,
                   degree: edu.degree,
-                  field: edu.field,
+                  fieldOfStudy: edu.field,
                   cpa: edu.cpa,
-                  isEnrolled: edu.isEnrolled,
                 }))
               : null,
             experienceArray: data.experiences
               ? data.experiences.map((experience) => ({
                   jobTitle: experience.jobTitle,
-                  company: experience.company,
-                  exp: experience.exp,
-                  isCurrent: experience.isCurrent,
+                  yearsOfExperience: experience.exp,
                 }))
               : null,
             interestArray: data.interests
@@ -220,7 +217,7 @@ const HomePage = () => {
             skillArray: data.skills
               ? data.skills.map((skill) => ({
                   softSkill: skill.softSkill,
-                  techSkill: skill.techSkill,
+                  technicalSkill: skill.techSkill,
                 }))
               : null,
           });
