@@ -3,27 +3,78 @@ import { Link, useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 import { FileUpload } from "primereact/fileupload";
 import { Toast } from "primereact/toast";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "./primereactMod.css";
 import styles from "./newcomers.module.css";
 import SlideShow from "./slideshow";
+import axios from "axios";
+
 function UploadResume() {
   const navigate = useNavigate();
 
   function goTo() {
-    navigate("/Education");
+    navigate("/Dashboard");
   }
+
+  // eslint-disable-next-line no-unused-vars
+  const [resumeData, setResumeData] = useState({});
 
   const toast = useRef(null);
 
-  const onUpload = () => {
-    console.log("ge");
-    toast.current.show({
-      severity: "info",
-      summary: "Success",
-      detail: "File Uploaded",
-    });
+  const onUpload = async (event) => {
+    const file = event.files[0];
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    console.log(file, "FormData");
+
+    const options = {
+      method: "POST",
+      url: "https://ai-resume-parser-extractor.p.rapidapi.com/pdf-upload",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        "X-RapidAPI-Key": "a1376b7c03msh53f300bfc2733d3p11a42bjsn5d4f352a32a8",
+        "X-RapidAPI-Host": "ai-resume-parser-extractor.p.rapidapi.com",
+      },
+      data: formData,
+    };
+
+    try {
+      const response = await axios.request(options);
+
+      const responseData = response.data;
+
+      const education = responseData.education || [];
+      const experience = responseData.experience || [];
+      const skills = responseData.skills || [];
+
+      const resumeData = {
+        skills,
+        education,
+        experience,
+      };
+
+      setResumeData(resumeData);
+
+      console.log(response.data, "hi");
+      console.log(resumeData, "hello");
+
+      toast.current.show({
+        severity: "info",
+        summary: "Success",
+        detail: "Resume parsed",
+      });
+    } catch (error) {
+      console.error(error);
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: "Failed to parse resume",
+      });
+    }
   };
+
   return (
     <>
       <div className={styles.main}>
