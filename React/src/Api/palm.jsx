@@ -2,7 +2,7 @@ import axios from "axios";
 
 class PalmAI {
   constructor() {
-    this.API_KEY = "AIzaSyAXnP8DoQRNpUf8or0rVW_Zu-WQt9qoQXo"; // Replace with your actual API key
+    this.API_KEY = "AIzaSyC3K4OJ2jqEfIJYYXpVwnf_xwEA2WwI3r0"; // Replace with your actual API key
     this.apiUrl =
       "https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText";
   }
@@ -28,18 +28,20 @@ class PalmAI {
           { category: "HARM_CATEGORY_DANGEROUS", threshold: 2 },
         ],
       };
-      const response = await axios
-        .post(`${this.apiUrl}?key=${this.API_KEY}`, requestData, {
+      const response = await axios.post(
+        `${this.apiUrl}?key=${this.API_KEY}`,
+        requestData,
+        {
           headers: {
             "Content-Type": "application/json",
           },
-        });
+        }
+      );
       return response.data.candidates[0].output;
     } catch (error) {
       throw error;
     }
   }
-  
 }
 
 export default PalmAI;

@@ -110,7 +110,7 @@ function Register() {
         currentPosition: "",
         careerAspiration: "",
         courses: [],
-        freeLearningCourses: [],
+        freeLearningCourses: null,
       });
     } catch (e) {
       console.log("Error adding document: " + e);
@@ -134,7 +134,7 @@ function Register() {
   return (
     <div className={styles.main}>
       <div className={styles.left_side}>
-        <img className={styles.logo} src="images/pwc-logo.png" alt="" />
+        <img className={styles.logo} src="images/logo.png" alt="" />
         <div className={regStyle.register}>
           <div className={styles.login}>
             <h1>Create your account</h1>

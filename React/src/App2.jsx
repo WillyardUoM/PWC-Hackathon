@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "./components/Scheduler";
 import Toolbar from "./components/Toolbar";
 import MessageArea from "./components/MessageArea";
 import "./App2.css";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+//firebase
+import { auth, db } from "../src/FirebaseComponent/Firebase";
+import { collection, doc, getDoc } from "firebase/firestore";
 
 function CalendarApp() {
   const [currentTimeFormatState, setCurrentTimeFormatState] = useState(true);
   const [messages, setMessages] = useState([]);
+
+  // db
+  // eslint-disable-next-line no-unused-vars
+  const [user, setUser] = useState(null);
+  const [APIData, setAPIData] = useState({
+    freeLearningCourses: null,
+  });
+  const [documentId, setDocumentId] = useState(null);
+  const [courseArray, setCourseArray] = useState([]);
 
   const addMessage = (message) => {
     const maxLogLength = 5;
@@ -28,7 +40,54 @@ function CalendarApp() {
     addMessage(message);
   };
 
-  const courses = [
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setDocumentId(user.email);
+        getDocumentData(documentId);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [documentId]);
+
+  const getDocumentData = (documentId) => {
+    const usersCollection = collection(db, "Accounts");
+    const docRef = doc(usersCollection, documentId);
+
+    getDoc(docRef)
+      .then((doc) => {
+        if (doc.exists) {
+          const data = doc.data();
+
+          setAPIData({
+            freeLearningCourses: data.freeLearningCourses
+              ? data.freeLearningCourses
+              : null,
+          });
+
+          const courseRetrieved =
+            APIData.freeLearningCourses.learningroadmap.map((course) => ({
+              course: course.course,
+              totalDuration: course.durationInHours,
+            }));
+          setCourseArray(courseRetrieved);
+
+          console.log(courseArray);
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document: " + error);
+      });
+  };
+
+ /*  const courses = [
     {
       name: "Course A",
       timePerDay: 2, // Amount of hours allocated per day for Course A
@@ -39,13 +98,13 @@ function CalendarApp() {
       timePerDay: 3, // Amount of hours allocated per day for Course B
       totalDuration: 20, // Total duration of Course B in days
     },
-  ];
+  ]; */
 
   const data = [];
   let currentDate = new Date();
   let i = 1;
 
-  for (const course of courses) {
+  for (const course of courseArray) {
     for (
       let countDuration = course.timePerDay;
       countDuration <= course.totalDuration;
