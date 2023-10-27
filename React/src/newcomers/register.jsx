@@ -68,6 +68,8 @@ function Register() {
     e.preventDefault();
     if (age < 0) {
       setAgeError("Age cannot be negative");
+    } else if (age == 0) {
+      setAgeError("Age cannot be zero");
     } else if (!isPasswordValid(password)) {
       setPasswordError("Use a strong password");
     } else {
@@ -108,9 +110,10 @@ function Register() {
         currentPosition: "",
         careerAspiration: "",
         courses: [],
+        freeLearningCourses: null,
       });
     } catch (e) {
-      alert("Error adding document: " + e);
+      console.log("Error adding document: " + e);
     }
 
     setFullName("");
@@ -131,7 +134,7 @@ function Register() {
   return (
     <div className={styles.main}>
       <div className={styles.left_side}>
-        <img className={styles.logo} src="images/pwc-logo.png" alt="" />
+        <img className={styles.logo} src="images/logo.png" alt="" />
         <div className={regStyle.register}>
           <div className={styles.login}>
             <h1>Create your account</h1>

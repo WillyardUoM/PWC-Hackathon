@@ -62,7 +62,7 @@ function Login() {
     <>
       <div className={styles.main}>
         <div className={styles.left_side}>
-          <img className={styles.logo} src="images/pwc-logo.png" alt="" />
+          <img className={styles.logo} src="images/logo.png" alt="" />
           {user ? (
             navigate("/Dashboard")
           ) : (
