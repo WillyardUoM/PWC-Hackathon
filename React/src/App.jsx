@@ -24,6 +24,7 @@ import ProjectCompleted from "./newcomers/project_completed";
 import CourseCompleted from "./newcomers/course_completed";
 import Skill from "./newcomers/skill";
 import Loading from "./Loader/logos";
+
 export const ThemeContext = React.createContext(null);
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path="/Chatbox" element={<Chatbox />} />
           <Route path="/Logout" element={<Logout />} />
           <Route path="/Calendar" element={<CalendarMain />} />
+          <Route path="/test" element={<Test />} />
         </Routes>
       </HashRouter>
     </>

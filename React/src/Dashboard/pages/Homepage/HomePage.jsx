@@ -137,6 +137,7 @@ const HomePage = () => {
   const [theme] = useState("light");
   const themeStyle = theme === "light" ? lightTheme : darkTheme;
   const [selectedCity, setSelectedCity] = useState(null);
+  const [course, setCourse] = useState("");
   const cities = [
     { name: "Premium Learning", code: "PL" },
     { name: "Free Learning", code: "FL" },
@@ -244,16 +245,20 @@ const HomePage = () => {
       })
       .join(", ");
   };
+  useEffect( () => {
+    const listCourse = fetchData("Data Science");
+    setCourse(listCourse);
+  },[])
 
   useEffect(() => {
     console.log(convertObjectToString(userData));
-
+    console.log(course)
     if (userDataString !== "null") {
-      runAPICall2(convertObjectToString(userData));
-      runAPICall(convertObjectToString(userData));
+      runAPICall2(convertObjectToString(course));
+      runAPICall(convertObjectToString(course));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, [course]);
 
   useEffect(() => {
     // Reset selectedCity to the default value when the component mounts (page reload)
@@ -261,6 +266,21 @@ const HomePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // eslint-disable-next-line no-unused-vars
+
+  const fetchData = async (prompt) => {
+    try {
+      const response = await axios.get('http://127.0.0.1:5000/predict', {
+        params: {
+          prompt: prompt,
+        },
+      });
+      return response.data;
+ // Assuming the response is an array of members
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const toast = useRef(null);
 
   const palm = new PalmAI();
